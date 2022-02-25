@@ -5,12 +5,12 @@
     <RootNamespace>Business</RootNamespace>
     <Version>2.6.0</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Authors>XCZ</Authors>
-    <Company>XCZ</Company>
+    <Authors>Sinsen</Authors>
+    <Company>$(Author)</Company>
     <Product></Product>
-    <PackageId>XCZ.Business.Application.Contracts</PackageId>
-    <PackageProjectUrl>https://github.com/WilliamXu96/ABP-MicroService</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/WilliamXu96/ABP-MicroService</RepositoryUrl>
+    <PackageId>UAP.$(AssemblyName)</PackageId>
+    <PackageProjectUrl>https://github.com/sinsens/UAPCore</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/sinsens/UAPCore</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
@@ -28,14 +28,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="WeiXinSdk\Dto\Code2SessionRequest.cs" />
-    <Compile Remove="WeiXinSdk\Dto\Code2SessionResponse.cs" />
-    <Compile Remove="WeiXinSdk\Dto\IMiniProgramRequest.cs" />
-    <Compile Remove="WeiXinSdk\Dto\MiniProgramCommonRequest.cs" />
-    <Compile Remove="WeiXinSdk\Dto\WeiXinAccessTokenResponse.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove="Localization\Business\cs.json" />
     <None Remove="Localization\Business\en.json" />
     <None Remove="Localization\Business\zh-Hans.json" />
@@ -50,8 +42,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Volo.Abp.Ddd.Application" Version="5.1.3" />
-    <PackageReference Include="Volo.Abp.PermissionManagement.Application.Contracts" Version="5.1.3" />
+    <PackageReference Include="Volo.Abp.Ddd.Application" Version="$(AbpVersion)" />
+    <PackageReference Include="Volo.Abp.PermissionManagement.Application.Contracts" Version="$(AbpVersion)" />
   </ItemGroup>
 
 </Project>

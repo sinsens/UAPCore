@@ -1,4 +1,3 @@
-using Business.Models;
 using Microsoft.EntityFrameworkCore;
 using UAP.EntityFrameworkCore;
 using Volo.Abp.Data;
@@ -8,8 +7,6 @@ namespace Business.EntityFrameworkCore
     [ConnectionStringName("Business")]
     public class BusinessDbContext : UAPDbContextBase<BusinessDbContext>
     {
-        public DbSet<Book> Book { get; set; }
-
         //Code generation...
 
         /*

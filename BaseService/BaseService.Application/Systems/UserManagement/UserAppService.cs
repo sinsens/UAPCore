@@ -1,17 +1,21 @@
 ﻿using BaseService.BaseData;
+using BaseService.Localization;
 using BaseService.Systems.UserManagement.Dto;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Identity;
 using Volo.Abp.ObjectExtending;
+using Volo.Abp.Users;
 
 namespace BaseService.Systems.UserManagement
 {
@@ -24,6 +28,7 @@ namespace BaseService.Systems.UserManagement
         private readonly IRepository<Organization, Guid> _orgRepository;
         private readonly IRepository<UserJob> _userJobsRepository;
         private readonly IRepository<UserOrganization> _userOrgsRepository;
+        private readonly IStringLocalizer<BaseServiceResource> _stringLocalizer;
 
         public UserAppService(
             IdentityUserManager userManager,
@@ -31,7 +36,8 @@ namespace BaseService.Systems.UserManagement
             IIdentityRoleRepository roleRepository,
             IRepository<Organization, Guid> orgRepository,
             IRepository<UserJob> userJobsRepository,
-            IRepository<UserOrganization> userOrgsRepository
+            IRepository<UserOrganization> userOrgsRepository,
+            IStringLocalizer<BaseServiceResource> stringLocalizer
             )
         {
             UserManager = userManager;
@@ -40,6 +46,7 @@ namespace BaseService.Systems.UserManagement
             _orgRepository = orgRepository;
             _userJobsRepository = userJobsRepository;
             _userOrgsRepository = userOrgsRepository;
+            _stringLocalizer = stringLocalizer;
         }
 
         public async Task<BaseIdentityUserDto> Get(Guid id)
@@ -55,7 +62,13 @@ namespace BaseService.Systems.UserManagement
 
         [Authorize(IdentityPermissions.Users.Create)]
         public async Task<IdentityUserDto> Create(BaseIdentityUserCreateDto input)
-        {
+{
+            var existUser = await UserRepository.FindByNormalizedUserNameAsync(input.UserName);
+            if (existUser != null)
+            {
+                throw new UserFriendlyException(_stringLocalizer["DuplicateUserName"]);
+            }
+
             var user = new IdentityUser(
                 GuidGenerator.Create(),
                 input.UserName,

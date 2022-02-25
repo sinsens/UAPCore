@@ -2,16 +2,25 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
-    <Authors>XCZ</Authors>
-    <RepositoryUrl>https://github.com/WilliamXu96/ABP-MicroService</RepositoryUrl>
-    <PackageProjectUrl>https://github.com/WilliamXu96/ABP-MicroService</PackageProjectUrl>
+    <Authors>$(Authors)</Authors>
+    <RepositoryUrl>https://github.com/sinsens/UAPCore</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/sinsens/UAPCore</PackageProjectUrl>
     <RepositoryType>git</RepositoryType>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageId>UAP.$(AssemblyName)</PackageId>
+	  <IsPackable>true</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Enums\" />
-    <Folder Include="Extensions\" />
-    <Folder Include="Utilities\" />
+    <Compile Remove="Enums\**" />
+    <Compile Remove="Extensions\**" />
+    <Compile Remove="Utilities\**" />
+    <EmbeddedResource Remove="Enums\**" />
+    <EmbeddedResource Remove="Extensions\**" />
+    <EmbeddedResource Remove="Utilities\**" />
+    <None Remove="Enums\**" />
+    <None Remove="Extensions\**" />
+    <None Remove="Utilities\**" />
   </ItemGroup>
 
 </Project>

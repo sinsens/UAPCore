@@ -9,35 +9,35 @@ namespace SharedLocker.Domain.SharedLockers
     public interface ILockerAppService : IApplicationService
     {
         /// <summary>
-        /// Ìí¼Ó
+        /// ï¿½ï¿½ï¿½
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
         Task<LockerDto> CreateAsync(CreateUpdateLockerDto input);
 
         /// <summary>
-        /// É¾³ý
+        /// É¾ï¿½ï¿½
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         Task DeleteAsync(Guid id);
 
         /// <summary>
-        /// »ñÈ¡
+        /// ï¿½ï¿½È¡
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         Task<LockerDto> GetAsync(Guid id);
 
         /// <summary>
-        /// ·ÖÒ³²éÑ¯
+        /// ï¿½ï¿½Ò³ï¿½ï¿½Ñ¯
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
         Task<PagedResultDto<LockerDto>> GetListAsync(PagedAndSortedLockerResultRequestDto input);
 
         /// <summary>
-        /// »ñÈ¡³ö×â¼ÇÂ¼
+        /// ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½Â¼
         /// </summary>
         /// <param name="id"></param>
         /// <param name="input"></param>
@@ -45,7 +45,7 @@ namespace SharedLocker.Domain.SharedLockers
         ValueTask<PagedResultDto<LockerRentInfoDto>> GetRentInfoListAsync(Guid id, PagedResultRequestDto input);
 
         /// <summary>
-        /// ¸üÐÂ
+        /// ï¿½ï¿½ï¿½ï¿½
         /// </summary>
         /// <param name="id"></param>
         /// <param name="input"></param>

@@ -13,6 +13,7 @@
     "Job": "岗位",
     "Employee": "职员",
     "AbpSettingManagement": "设置管理",
-    "AuditLogging": "系统日志"
+    "AuditLogging": "系统日志",
+    "DuplicateUserName":  "用户名已被使用"
   }
 }

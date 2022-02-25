@@ -32,7 +32,7 @@ public class SharedLockerDbContext : UAPDbContextBase<SharedLockerDbContext>, IS
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         base.OnConfiguring(optionsBuilder);
-        optionsBuilder.EnableSensitiveDataLogging(true);
-        optionsBuilder.LogTo(System.Console.WriteLine);
+        //optionsBuilder.EnableSensitiveDataLogging(true);
+        //optionsBuilder.LogTo(System.Console.WriteLine);
     }
 }

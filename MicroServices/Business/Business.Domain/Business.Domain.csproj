@@ -9,7 +9,7 @@
     <Company>Sinsen</Company>
     <Product></Product>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageId>XCZ.Business.Domain</PackageId>
+    <PackageId>UAP.$(AssemblyName)</PackageId>
     <PackageProjectUrl>https://github.com/WilliamXu96/ABP-MicroService</PackageProjectUrl>
     <RepositoryUrl>https://github.com/WilliamXu96/ABP-MicroService</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
@@ -25,12 +25,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Volo.Abp.AuditLogging.Domain" Version="5.1.3" />
-    <PackageReference Include="Volo.Abp.Ddd.Domain" Version="5.1.3" />
-    <PackageReference Include="Volo.Abp.EntityFrameworkCore" Version="5.1.3" />
-    <PackageReference Include="Volo.Abp.Localization" Version="5.1.3" />
-    <PackageReference Include="Volo.Abp.SettingManagement.Domain" Version="5.1.3" />
-    <PackageReference Include="Volo.Abp.Validation" Version="5.1.3" />
+    <PackageReference Include="Volo.Abp.AuditLogging.Domain" Version="$(AbpVersion)" />
+    <PackageReference Include="Volo.Abp.Ddd.Domain" Version="$(AbpVersion)" />
+    <PackageReference Include="Volo.Abp.EntityFrameworkCore" Version="$(AbpVersion)" />
+    <PackageReference Include="Volo.Abp.Localization" Version="$(AbpVersion)" />
+    <PackageReference Include="Volo.Abp.SettingManagement.Domain" Version="$(AbpVersion)" />
+    <PackageReference Include="Volo.Abp.Validation" Version="$(AbpVersion)" />
   </ItemGroup>
 
   <ItemGroup>

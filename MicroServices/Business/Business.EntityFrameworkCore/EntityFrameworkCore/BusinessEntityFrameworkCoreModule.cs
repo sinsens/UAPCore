@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using UAP.EntityFrameworkCore;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
 using Volo.Abp.Modularity;
@@ -17,7 +18,8 @@ namespace Business.EntityFrameworkCore
         typeof(AbpAuditLoggingEntityFrameworkCoreModule),
         typeof(AbpTenantManagementEntityFrameworkCoreModule),
         typeof(FormEntityFrameworkCoreModule),
-        typeof(FlowEntityFrameworkCoreModule)
+        typeof(FlowEntityFrameworkCoreModule),
+        typeof(UAPEntityFrameworkCoreModule)
     )]
     public class BusinessEntityFrameworkCoreModule : AbpModule
     {

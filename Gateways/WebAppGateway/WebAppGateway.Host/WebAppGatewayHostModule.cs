@@ -21,10 +21,10 @@ using Volo.Abp.Modularity;
 namespace WebAppGateway
 {
     [DependsOn(
-    typeof(AbpAutofacModule),
-    typeof(AbpAspNetCoreSerilogModule)
+        typeof(AbpAutofacModule),
+        typeof(AbpAspNetCoreSerilogModule)
     )]
-    public class WebAppGatewayHostModule: AbpModule
+    public class WebAppGatewayHostModule : AbpModule
     {
         private const string DefaultCorsPolicyName = "Default";
 
@@ -39,7 +39,8 @@ namespace WebAppGateway
             ConfigureCors(context, configuration);
             //ConfigureSwaggerServices(context);
             ConfigureLocalization();
-            context.Services.AddOcelot(context.Services.GetConfiguration());
+            //context.Services.AddOcelot(context.Services.GetConfiguration());
+            context.Services.AddOcelot();
         }
 
         public override void OnApplicationInitialization(ApplicationInitializationContext context)
@@ -47,18 +48,20 @@ namespace WebAppGateway
             var app = context.GetApplicationBuilder();
 
             app.UseCorrelationId();
-            app.UseVirtualFiles();
+            app.UseStaticFiles();
             app.UseRouting();
             app.UseCors(DefaultCorsPolicyName);
             app.UseAuthentication();
             app.UseAbpClaimsMap();
             app.UseAuthorization();
 
-            //app.UseSwagger();
-            //app.UseSwaggerUI(options =>
-            //{
-            //    options.SwaggerEndpoint("/swagger/v1/swagger.json", "Business Service API");
-            //});
+            /*
+            app.UseSwagger();
+            app.UseSwaggerUI(options =>
+            {
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", "WebAppGateway API");
+            });
+            */
 
             app.UseOcelot().Wait();
             app.UseAbpSerilogEnrichers();

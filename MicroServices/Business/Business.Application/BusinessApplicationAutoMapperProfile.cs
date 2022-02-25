@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Business.WeiXinSdk.Dto;
 
 namespace Business
 {
