@@ -1,0 +1,7 @@
+{
+  "modules": {
+    "SharedLocker": {
+      "path": "SharedLocker.abpmdl.json"
+    }
+  }
+}

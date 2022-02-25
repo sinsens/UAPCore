@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+	  <TargetFramework>net6</TargetFramework>
+    <RootNamespace />
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Volo.Abp.EntityFrameworkCore" Version="$(AbpVersion)" />
+    <PackageReference Include="Volo.Abp.Identity.EntityFrameworkCore" Version="$(AbpVersion)" />
+    <ProjectReference Include="..\..\..\Common\src\EasyAbp.WeChatManagement.Common.EntityFrameworkCore\EasyAbp.WeChatManagement.Common.EntityFrameworkCore.csproj" />
+    <ProjectReference Include="..\EasyAbp.WeChatManagement.MiniPrograms.Domain\EasyAbp.WeChatManagement.MiniPrograms.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="EasyAbp\WeChatManagement\MiniPrograms" />
+	  <PackageReference Include="UAP.EntityFrameworkCore" Version="1.0.0" />
+  </ItemGroup>
+
+</Project>

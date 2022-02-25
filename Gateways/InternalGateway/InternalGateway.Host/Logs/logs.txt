@@ -1,0 +1,168 @@
+2022-02-22 08:45:34.439 +08:00 [INF] Starting Business.Host
+2022-02-22 08:45:36.017 +08:00 [INF] User profile is available. Using 'C:\Users\jy\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2022-02-22 08:45:36.151 +08:00 [INF] Loaded ABP modules:
+2022-02-22 08:45:36.152 +08:00 [INF] - Volo.Abp.Castle.AbpCastleCoreModule
+2022-02-22 08:45:36.153 +08:00 [INF] - Volo.Abp.Autofac.AbpAutofacModule
+2022-02-22 08:45:36.153 +08:00 [INF] - Volo.Abp.Users.AbpUsersDomainSharedModule
+2022-02-22 08:45:36.154 +08:00 [INF] - Volo.Abp.Validation.AbpValidationAbstractionsModule
+2022-02-22 08:45:36.154 +08:00 [INF] - Volo.Abp.VirtualFileSystem.AbpVirtualFileSystemModule
+2022-02-22 08:45:36.155 +08:00 [INF] - Volo.Abp.Localization.AbpLocalizationAbstractionsModule
+2022-02-22 08:45:36.155 +08:00 [INF] - Volo.Abp.Security.AbpSecurityModule
+2022-02-22 08:45:36.156 +08:00 [INF] - Volo.Abp.ObjectExtending.AbpObjectExtendingModule
+2022-02-22 08:45:36.156 +08:00 [INF] - Volo.Abp.Uow.AbpUnitOfWorkModule
+2022-02-22 08:45:36.157 +08:00 [INF] - Volo.Abp.Data.AbpDataModule
+2022-02-22 08:45:36.157 +08:00 [INF] - Volo.Abp.MultiTenancy.AbpMultiTenancyModule
+2022-02-22 08:45:36.158 +08:00 [INF] - Volo.Abp.Settings.AbpSettingsModule
+2022-02-22 08:45:36.158 +08:00 [INF] - Volo.Abp.Localization.AbpLocalizationModule
+2022-02-22 08:45:36.159 +08:00 [INF] - Volo.Abp.Validation.AbpValidationModule
+2022-02-22 08:45:36.159 +08:00 [INF] - Volo.Abp.Features.AbpFeaturesModule
+2022-02-22 08:45:36.160 +08:00 [INF] - Volo.Abp.Identity.AbpIdentityDomainSharedModule
+2022-02-22 08:45:36.161 +08:00 [INF] - Volo.Abp.EventBus.AbpEventBusModule
+2022-02-22 08:45:36.161 +08:00 [INF] - Volo.Abp.Users.AbpUsersAbstractionModule
+2022-02-22 08:45:36.162 +08:00 [INF] - Volo.Abp.Authorization.AbpAuthorizationModule
+2022-02-22 08:45:36.162 +08:00 [INF] - Volo.Abp.Timing.AbpTimingModule
+2022-02-22 08:45:36.163 +08:00 [INF] - Volo.Abp.Json.AbpJsonModule
+2022-02-22 08:45:36.163 +08:00 [INF] - Volo.Abp.Threading.AbpThreadingModule
+2022-02-22 08:45:36.164 +08:00 [INF] - Volo.Abp.Auditing.AbpAuditingModule
+2022-02-22 08:45:36.164 +08:00 [INF] - Volo.Abp.Guids.AbpGuidsModule
+2022-02-22 08:45:36.165 +08:00 [INF] - Volo.Abp.ObjectMapping.AbpObjectMappingModule
+2022-02-22 08:45:36.166 +08:00 [INF] - Volo.Abp.ExceptionHandling.AbpExceptionHandlingModule
+2022-02-22 08:45:36.166 +08:00 [INF] - Volo.Abp.Specifications.AbpSpecificationsModule
+2022-02-22 08:45:36.167 +08:00 [INF] - Volo.Abp.Domain.AbpDddDomainModule
+2022-02-22 08:45:36.168 +08:00 [INF] - Volo.Abp.Application.AbpDddApplicationContractsModule
+2022-02-22 08:45:36.169 +08:00 [INF] - Volo.Abp.Http.AbpHttpAbstractionsModule
+2022-02-22 08:45:36.169 +08:00 [INF] - Volo.Abp.Application.AbpDddApplicationModule
+2022-02-22 08:45:36.170 +08:00 [INF] - Volo.Abp.PermissionManagement.AbpPermissionManagementDomainSharedModule
+2022-02-22 08:45:36.171 +08:00 [INF] - Volo.Abp.PermissionManagement.AbpPermissionManagementApplicationContractsModule
+2022-02-22 08:45:36.172 +08:00 [INF] - Volo.Abp.Identity.AbpIdentityApplicationContractsModule
+2022-02-22 08:45:36.172 +08:00 [INF] - Volo.Abp.Minify.AbpMinifyModule
+2022-02-22 08:45:36.173 +08:00 [INF] - Volo.Abp.Http.AbpHttpModule
+2022-02-22 08:45:36.173 +08:00 [INF] - Volo.Abp.AspNetCore.AbpAspNetCoreModule
+2022-02-22 08:45:36.174 +08:00 [INF] - Volo.Abp.ApiVersioning.AbpApiVersioningAbstractionsModule
+2022-02-22 08:45:36.174 +08:00 [INF] - Volo.Abp.AspNetCore.Mvc.AbpAspNetCoreMvcContractsModule
+2022-02-22 08:45:36.175 +08:00 [INF] - Volo.Abp.UI.AbpUiModule
+2022-02-22 08:45:36.175 +08:00 [INF] - Volo.Abp.GlobalFeatures.AbpGlobalFeaturesModule
+2022-02-22 08:45:36.176 +08:00 [INF] - Volo.Abp.AspNetCore.Mvc.AbpAspNetCoreMvcModule
+2022-02-22 08:45:36.176 +08:00 [INF] - Volo.Abp.Identity.AbpIdentityHttpApiModule
+2022-02-22 08:45:36.177 +08:00 [INF] - Volo.Abp.EntityFrameworkCore.AbpEntityFrameworkCoreModule
+2022-02-22 08:45:36.177 +08:00 [INF] - Volo.Abp.EntityFrameworkCore.SqlServer.AbpEntityFrameworkCoreSqlServerModule
+2022-02-22 08:45:36.178 +08:00 [INF] - Volo.Abp.AspNetCore.Serilog.AbpAspNetCoreSerilogModule
+2022-02-22 08:45:36.179 +08:00 [INF] - InternalGateway.InternalGatewayHostModule
+2022-02-22 08:45:37.008 +08:00 [INF] Initialized all ABP modules.
+2022-02-22 08:45:37.021 +08:00 [INF] Now listening on: http://localhost:59682
+2022-02-22 08:45:37.023 +08:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-02-22 08:45:37.024 +08:00 [INF] Hosting environment: Development
+2022-02-22 08:45:37.025 +08:00 [INF] Content root path: G:\github\sinsens\ABP-MicroService\Gateways\InternalGateway\InternalGateway.Host
+2022-02-22 08:45:41.358 +08:00 [INF] Application is shutting down...
+2022-02-22 09:07:14.902 +08:00 [INF] Starting Business.Host
+2022-02-22 09:07:16.089 +08:00 [INF] User profile is available. Using 'C:\Users\jy\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2022-02-22 09:07:16.152 +08:00 [INF] Loaded ABP modules:
+2022-02-22 09:07:16.153 +08:00 [INF] - Volo.Abp.Castle.AbpCastleCoreModule
+2022-02-22 09:07:16.154 +08:00 [INF] - Volo.Abp.Autofac.AbpAutofacModule
+2022-02-22 09:07:16.155 +08:00 [INF] - Volo.Abp.Users.AbpUsersDomainSharedModule
+2022-02-22 09:07:16.155 +08:00 [INF] - Volo.Abp.Validation.AbpValidationAbstractionsModule
+2022-02-22 09:07:16.156 +08:00 [INF] - Volo.Abp.VirtualFileSystem.AbpVirtualFileSystemModule
+2022-02-22 09:07:16.157 +08:00 [INF] - Volo.Abp.Localization.AbpLocalizationAbstractionsModule
+2022-02-22 09:07:16.157 +08:00 [INF] - Volo.Abp.Security.AbpSecurityModule
+2022-02-22 09:07:16.158 +08:00 [INF] - Volo.Abp.ObjectExtending.AbpObjectExtendingModule
+2022-02-22 09:07:16.159 +08:00 [INF] - Volo.Abp.Uow.AbpUnitOfWorkModule
+2022-02-22 09:07:16.160 +08:00 [INF] - Volo.Abp.Data.AbpDataModule
+2022-02-22 09:07:16.160 +08:00 [INF] - Volo.Abp.MultiTenancy.AbpMultiTenancyModule
+2022-02-22 09:07:16.161 +08:00 [INF] - Volo.Abp.Settings.AbpSettingsModule
+2022-02-22 09:07:16.163 +08:00 [INF] - Volo.Abp.Localization.AbpLocalizationModule
+2022-02-22 09:07:16.163 +08:00 [INF] - Volo.Abp.Validation.AbpValidationModule
+2022-02-22 09:07:16.164 +08:00 [INF] - Volo.Abp.Features.AbpFeaturesModule
+2022-02-22 09:07:16.165 +08:00 [INF] - Volo.Abp.Identity.AbpIdentityDomainSharedModule
+2022-02-22 09:07:16.166 +08:00 [INF] - Volo.Abp.EventBus.AbpEventBusModule
+2022-02-22 09:07:16.166 +08:00 [INF] - Volo.Abp.Users.AbpUsersAbstractionModule
+2022-02-22 09:07:16.167 +08:00 [INF] - Volo.Abp.Authorization.AbpAuthorizationModule
+2022-02-22 09:07:16.167 +08:00 [INF] - Volo.Abp.Timing.AbpTimingModule
+2022-02-22 09:07:16.168 +08:00 [INF] - Volo.Abp.Json.AbpJsonModule
+2022-02-22 09:07:16.169 +08:00 [INF] - Volo.Abp.Threading.AbpThreadingModule
+2022-02-22 09:07:16.169 +08:00 [INF] - Volo.Abp.Auditing.AbpAuditingModule
+2022-02-22 09:07:16.170 +08:00 [INF] - Volo.Abp.Guids.AbpGuidsModule
+2022-02-22 09:07:16.171 +08:00 [INF] - Volo.Abp.ObjectMapping.AbpObjectMappingModule
+2022-02-22 09:07:16.172 +08:00 [INF] - Volo.Abp.ExceptionHandling.AbpExceptionHandlingModule
+2022-02-22 09:07:16.172 +08:00 [INF] - Volo.Abp.Specifications.AbpSpecificationsModule
+2022-02-22 09:07:16.173 +08:00 [INF] - Volo.Abp.Domain.AbpDddDomainModule
+2022-02-22 09:07:16.174 +08:00 [INF] - Volo.Abp.Application.AbpDddApplicationContractsModule
+2022-02-22 09:07:16.175 +08:00 [INF] - Volo.Abp.Http.AbpHttpAbstractionsModule
+2022-02-22 09:07:16.175 +08:00 [INF] - Volo.Abp.Application.AbpDddApplicationModule
+2022-02-22 09:07:16.176 +08:00 [INF] - Volo.Abp.PermissionManagement.AbpPermissionManagementDomainSharedModule
+2022-02-22 09:07:16.177 +08:00 [INF] - Volo.Abp.PermissionManagement.AbpPermissionManagementApplicationContractsModule
+2022-02-22 09:07:16.177 +08:00 [INF] - Volo.Abp.Identity.AbpIdentityApplicationContractsModule
+2022-02-22 09:07:16.178 +08:00 [INF] - Volo.Abp.Minify.AbpMinifyModule
+2022-02-22 09:07:16.178 +08:00 [INF] - Volo.Abp.Http.AbpHttpModule
+2022-02-22 09:07:16.179 +08:00 [INF] - Volo.Abp.AspNetCore.AbpAspNetCoreModule
+2022-02-22 09:07:16.179 +08:00 [INF] - Volo.Abp.ApiVersioning.AbpApiVersioningAbstractionsModule
+2022-02-22 09:07:16.180 +08:00 [INF] - Volo.Abp.AspNetCore.Mvc.AbpAspNetCoreMvcContractsModule
+2022-02-22 09:07:16.180 +08:00 [INF] - Volo.Abp.UI.AbpUiModule
+2022-02-22 09:07:16.181 +08:00 [INF] - Volo.Abp.GlobalFeatures.AbpGlobalFeaturesModule
+2022-02-22 09:07:16.181 +08:00 [INF] - Volo.Abp.AspNetCore.Mvc.AbpAspNetCoreMvcModule
+2022-02-22 09:07:16.182 +08:00 [INF] - Volo.Abp.Identity.AbpIdentityHttpApiModule
+2022-02-22 09:07:16.183 +08:00 [INF] - Volo.Abp.EntityFrameworkCore.AbpEntityFrameworkCoreModule
+2022-02-22 09:07:16.184 +08:00 [INF] - Volo.Abp.EntityFrameworkCore.SqlServer.AbpEntityFrameworkCoreSqlServerModule
+2022-02-22 09:07:16.184 +08:00 [INF] - Volo.Abp.AspNetCore.Serilog.AbpAspNetCoreSerilogModule
+2022-02-22 09:07:16.185 +08:00 [INF] - InternalGateway.InternalGatewayHostModule
+2022-02-22 09:07:17.006 +08:00 [INF] Initialized all ABP modules.
+2022-02-22 09:07:17.018 +08:00 [INF] Now listening on: http://localhost:59682
+2022-02-22 09:07:17.019 +08:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-02-22 09:07:17.020 +08:00 [INF] Hosting environment: Development
+2022-02-22 09:07:17.020 +08:00 [INF] Content root path: G:\github\sinsens\ABP-MicroService\Gateways\InternalGateway\InternalGateway.Host
+2022-02-23 18:05:12.413 +08:00 [INF] Application is shutting down...
+2022-02-24 08:40:51.161 +08:00 [INF] Starting Business.Host
+2022-02-24 08:40:53.305 +08:00 [INF] User profile is available. Using 'C:\Users\jy\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2022-02-24 08:40:53.412 +08:00 [INF] Loaded ABP modules:
+2022-02-24 08:40:53.451 +08:00 [INF] - Volo.Abp.Castle.AbpCastleCoreModule
+2022-02-24 08:40:53.451 +08:00 [INF] - Volo.Abp.Autofac.AbpAutofacModule
+2022-02-24 08:40:53.452 +08:00 [INF] - Volo.Abp.Users.AbpUsersDomainSharedModule
+2022-02-24 08:40:53.453 +08:00 [INF] - Volo.Abp.Validation.AbpValidationAbstractionsModule
+2022-02-24 08:40:53.453 +08:00 [INF] - Volo.Abp.VirtualFileSystem.AbpVirtualFileSystemModule
+2022-02-24 08:40:53.454 +08:00 [INF] - Volo.Abp.Localization.AbpLocalizationAbstractionsModule
+2022-02-24 08:40:53.454 +08:00 [INF] - Volo.Abp.Security.AbpSecurityModule
+2022-02-24 08:40:53.454 +08:00 [INF] - Volo.Abp.ObjectExtending.AbpObjectExtendingModule
+2022-02-24 08:40:53.455 +08:00 [INF] - Volo.Abp.Uow.AbpUnitOfWorkModule
+2022-02-24 08:40:53.455 +08:00 [INF] - Volo.Abp.Data.AbpDataModule
+2022-02-24 08:40:53.456 +08:00 [INF] - Volo.Abp.MultiTenancy.AbpMultiTenancyModule
+2022-02-24 08:40:53.456 +08:00 [INF] - Volo.Abp.Settings.AbpSettingsModule
+2022-02-24 08:40:53.457 +08:00 [INF] - Volo.Abp.Localization.AbpLocalizationModule
+2022-02-24 08:40:53.457 +08:00 [INF] - Volo.Abp.Validation.AbpValidationModule
+2022-02-24 08:40:53.458 +08:00 [INF] - Volo.Abp.Features.AbpFeaturesModule
+2022-02-24 08:40:53.458 +08:00 [INF] - Volo.Abp.Identity.AbpIdentityDomainSharedModule
+2022-02-24 08:40:53.459 +08:00 [INF] - Volo.Abp.EventBus.AbpEventBusModule
+2022-02-24 08:40:53.459 +08:00 [INF] - Volo.Abp.Users.AbpUsersAbstractionModule
+2022-02-24 08:40:53.460 +08:00 [INF] - Volo.Abp.Authorization.AbpAuthorizationModule
+2022-02-24 08:40:53.460 +08:00 [INF] - Volo.Abp.Timing.AbpTimingModule
+2022-02-24 08:40:53.461 +08:00 [INF] - Volo.Abp.Json.AbpJsonModule
+2022-02-24 08:40:53.461 +08:00 [INF] - Volo.Abp.Threading.AbpThreadingModule
+2022-02-24 08:40:53.462 +08:00 [INF] - Volo.Abp.Auditing.AbpAuditingModule
+2022-02-24 08:40:53.462 +08:00 [INF] - Volo.Abp.Guids.AbpGuidsModule
+2022-02-24 08:40:53.463 +08:00 [INF] - Volo.Abp.ObjectMapping.AbpObjectMappingModule
+2022-02-24 08:40:53.463 +08:00 [INF] - Volo.Abp.ExceptionHandling.AbpExceptionHandlingModule
+2022-02-24 08:40:53.464 +08:00 [INF] - Volo.Abp.Specifications.AbpSpecificationsModule
+2022-02-24 08:40:53.464 +08:00 [INF] - Volo.Abp.Domain.AbpDddDomainModule
+2022-02-24 08:40:53.465 +08:00 [INF] - Volo.Abp.Application.AbpDddApplicationContractsModule
+2022-02-24 08:40:53.465 +08:00 [INF] - Volo.Abp.Http.AbpHttpAbstractionsModule
+2022-02-24 08:40:53.466 +08:00 [INF] - Volo.Abp.Application.AbpDddApplicationModule
+2022-02-24 08:40:53.466 +08:00 [INF] - Volo.Abp.PermissionManagement.AbpPermissionManagementDomainSharedModule
+2022-02-24 08:40:53.467 +08:00 [INF] - Volo.Abp.PermissionManagement.AbpPermissionManagementApplicationContractsModule
+2022-02-24 08:40:53.470 +08:00 [INF] - Volo.Abp.Identity.AbpIdentityApplicationContractsModule
+2022-02-24 08:40:53.470 +08:00 [INF] - Volo.Abp.Minify.AbpMinifyModule
+2022-02-24 08:40:53.471 +08:00 [INF] - Volo.Abp.Http.AbpHttpModule
+2022-02-24 08:40:53.471 +08:00 [INF] - Volo.Abp.AspNetCore.AbpAspNetCoreModule
+2022-02-24 08:40:53.472 +08:00 [INF] - Volo.Abp.ApiVersioning.AbpApiVersioningAbstractionsModule
+2022-02-24 08:40:53.472 +08:00 [INF] - Volo.Abp.AspNetCore.Mvc.AbpAspNetCoreMvcContractsModule
+2022-02-24 08:40:53.473 +08:00 [INF] - Volo.Abp.UI.AbpUiModule
+2022-02-24 08:40:53.473 +08:00 [INF] - Volo.Abp.GlobalFeatures.AbpGlobalFeaturesModule
+2022-02-24 08:40:53.474 +08:00 [INF] - Volo.Abp.AspNetCore.Mvc.AbpAspNetCoreMvcModule
+2022-02-24 08:40:53.474 +08:00 [INF] - Volo.Abp.Identity.AbpIdentityHttpApiModule
+2022-02-24 08:40:53.475 +08:00 [INF] - Volo.Abp.EntityFrameworkCore.AbpEntityFrameworkCoreModule
+2022-02-24 08:40:53.475 +08:00 [INF] - Volo.Abp.EntityFrameworkCore.SqlServer.AbpEntityFrameworkCoreSqlServerModule
+2022-02-24 08:40:53.476 +08:00 [INF] - Volo.Abp.AspNetCore.Serilog.AbpAspNetCoreSerilogModule
+2022-02-24 08:40:53.476 +08:00 [INF] - InternalGateway.InternalGatewayHostModule
+2022-02-24 08:40:54.495 +08:00 [INF] Initialized all ABP modules.
+2022-02-24 08:40:54.507 +08:00 [INF] Now listening on: http://localhost:59682
+2022-02-24 08:40:54.509 +08:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-02-24 08:40:54.509 +08:00 [INF] Hosting environment: Development
+2022-02-24 08:40:54.510 +08:00 [INF] Content root path: G:\github\sinsens\ABP-MicroService\Gateways\InternalGateway\InternalGateway.Host
+2022-02-24 09:28:59.336 +08:00 [INF] Application is shutting down...

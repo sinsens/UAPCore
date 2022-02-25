@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <RootNamespace />
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Volo.Abp.AutoMapper" Version="$(AbpVersion)" />
+    <PackageReference Include="Volo.Abp.Ddd.Application" Version="$(AbpVersion)" />
+    <ProjectReference Include="..\EasyAbp.WeChatManagement.Common.Application.Contracts\EasyAbp.WeChatManagement.Common.Application.Contracts.csproj" />
+    <ProjectReference Include="..\EasyAbp.WeChatManagement.Common.Domain\EasyAbp.WeChatManagement.Common.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

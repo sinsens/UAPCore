@@ -1,0 +1,79 @@
+{
+  "folders": {
+    "items": {
+      "src": {},
+      "test": {},
+      "host": {}
+    }
+  },
+  "packages": {
+    "SharedLocker.Domain.Shared": {
+      "path": "src/SharedLocker.Domain.Shared/SharedLocker.Domain.Shared.abppkg.json",
+      "folder": "src"
+    },
+    "SharedLocker.Domain": {
+      "path": "src/SharedLocker.Domain/SharedLocker.Domain.abppkg.json",
+      "folder": "src"
+    },
+    "SharedLocker.Application.Contracts": {
+      "path": "src/SharedLocker.Application.Contracts/SharedLocker.Application.Contracts.abppkg.json",
+      "folder": "src"
+    },
+    "SharedLocker.Application": {
+      "path": "src/SharedLocker.Application/SharedLocker.Application.abppkg.json",
+      "folder": "src"
+    },
+    "SharedLocker.EntityFrameworkCore": {
+      "path": "src/SharedLocker.EntityFrameworkCore/SharedLocker.EntityFrameworkCore.abppkg.json",
+      "folder": "src"
+    },
+    "SharedLocker.MongoDB": {
+      "path": "src/SharedLocker.MongoDB/SharedLocker.MongoDB.abppkg.json",
+      "folder": "src"
+    },
+    "SharedLocker.HttpApi": {
+      "path": "src/SharedLocker.HttpApi/SharedLocker.HttpApi.abppkg.json",
+      "folder": "src"
+    },
+    "SharedLocker.HttpApi.Client": {
+      "path": "src/SharedLocker.HttpApi.Client/SharedLocker.HttpApi.Client.abppkg.json",
+      "folder": "src"
+    },
+    "SharedLocker.TestBase": {
+      "path": "test/SharedLocker.TestBase/SharedLocker.TestBase.abppkg.json",
+      "folder": "test"
+    },
+    "SharedLocker.EntityFrameworkCore.Tests": {
+      "path": "test/SharedLocker.EntityFrameworkCore.Tests/SharedLocker.EntityFrameworkCore.Tests.abppkg.json",
+      "folder": "test"
+    },
+    "SharedLocker.MongoDB.Tests": {
+      "path": "test/SharedLocker.MongoDB.Tests/SharedLocker.MongoDB.Tests.abppkg.json",
+      "folder": "test"
+    },
+    "SharedLocker.Domain.Tests": {
+      "path": "test/SharedLocker.Domain.Tests/SharedLocker.Domain.Tests.abppkg.json",
+      "folder": "test"
+    },
+    "SharedLocker.Application.Tests": {
+      "path": "test/SharedLocker.Application.Tests/SharedLocker.Application.Tests.abppkg.json",
+      "folder": "test"
+    },
+    "SharedLocker.HttpApi.Host": {
+      "path": "host/SharedLocker.HttpApi.Host/SharedLocker.HttpApi.Host.abppkg.json",
+      "folder": "host"
+    },
+    "SharedLocker.HttpApi.Client.ConsoleTestApp": {
+      "path": "test/SharedLocker.HttpApi.Client.ConsoleTestApp/SharedLocker.HttpApi.Client.ConsoleTestApp.abppkg.json",
+      "folder": "test"
+    },
+    "SharedLocker.IdentityServer": {
+      "path": "host/SharedLocker.IdentityServer/SharedLocker.IdentityServer.abppkg.json",
+      "folder": "host"
+    },
+    "SharedLocker.Host.Shared": {
+      "path": "host/SharedLocker.Host.Shared/SharedLocker.Host.Shared.abppkg.json",
+      "folder": "host"
+    }
+  }
+}
