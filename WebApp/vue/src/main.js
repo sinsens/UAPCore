@@ -40,18 +40,40 @@ Vue.use(Element, {
   i18n: (key, value) => i18n.t(key, value)
 })
 
+// 按钮防抖
+Vue.component("ElButton").mixin({
+  data() {
+    return {
+      debounce: false
+    }
+  },
+  methods: {
+    handleClick(evt) {
+      if (this.debounce) {
+        this.$message.warning("点太快了");
+      } else {
+        this.debounce = true;
+        this.$emit('click', evt);
+        setTimeout(() => {
+          this.debounce = false;
+        }, 500);//延时时间
+      }
+    }
+  }
+})
+
 // register global utility filters
 Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key])
 })
 
-Vue.filter('formatDate', function(value) {
+Vue.filter('formatDate', function (value) {
   if (value) {
     return moment(String(value)).format('YYYY-MM-DD')
   }
 })
 
-Vue.filter('formatDateTime', function(value) {
+Vue.filter('formatDateTime', function (value) {
   if (value) {
     return moment(String(value)).format('YYYY-MM-DD HH:mm:ss')
   }
