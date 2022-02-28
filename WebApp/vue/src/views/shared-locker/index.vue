@@ -104,7 +104,7 @@
         </el-button>
       </div>
 
-      <div slot="footer" class="dialog-footer">
+      <div slot="footer" class="dialog-footer" v-if="showRentList">
         <el-table
           :data="rentList"
           stripe
@@ -303,6 +303,7 @@ export default {
       formTitle: '',
       isEdit: false,
       rentList: [],
+      showRentList: false,
     }
   },
   created() {
@@ -417,7 +418,16 @@ export default {
     handleCreate() {
       this.formTitle = '新增储物柜'
       this.isEdit = false
+      this.resetForm()
+      this.showRentList = false
       this.dialogFormVisible = true
+    },
+    resetForm() {
+      for (const i in this.form) {
+        if (typeof this.form[i] == 'string') this.form[i] = ''
+      }
+      if (this.$refs.form) this.$refs.form.clearValidate()
+      this.rentList = []
     },
     handleDelete(row) {
       this.$confirm('是否删除' + row.name + '?', '提示', {
@@ -446,6 +456,8 @@ export default {
         })
     },
     handleUpdate(row) {
+      this.resetForm()
+      this.showRentList = true
       this.formTitle = '修改储物柜'
       this.isEdit = true
       if (row) {

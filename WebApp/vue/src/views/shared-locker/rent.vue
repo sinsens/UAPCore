@@ -37,6 +37,15 @@
         >
           新增
         </el-button>
+        <el-button
+          class="filter-item"
+          size="mini"
+          type="primary"
+          icon="el-icon-plus"
+          @click="handleQuickCreate"
+        >
+          快速新增
+        </el-button>
       </div>
     </div>
 
@@ -94,7 +103,7 @@
               v-for="item in lockerList"
               :key="item.id"
               :value="item.id"
-              :label="item.name"
+              :label="'编号' + item.name"
             >
               编号{{ item.number }}
             </el-option>
@@ -134,6 +143,110 @@
       </div>
     </el-dialog>
     <!-- end of 新增窗口 -->
+
+    <!-- 快速新增窗口 -->
+    <el-dialog
+      :visible.sync="dialogQuickApplyFormVisible"
+      :close-on-click-modal="false"
+      title="快速新增租用申请"
+      @close="closeQuickApplyForm"
+      width="500px"
+    >
+      <el-form
+        ref="form"
+        :inline="true"
+        :model="form"
+        :rules="rules"
+        size="small"
+        label-width="100px"
+      >
+        <el-form-item label="所属应用" prop="appId">
+          <el-select
+            v-model="form.appId"
+            style="width: 188px;"
+            placeholder="请选择"
+            @change="changeApp"
+            :disabled="isEdit"
+            filterable
+            default-first-option
+          >
+            <el-option
+              v-for="item in appList"
+              :key="item.name"
+              :label="item.name"
+              :value="item.id"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="姓名" prop="name">
+          <el-input v-model="form.name" style="width: 350px;" />
+        </el-form-item>
+        <el-form-item label="联系电话" prop="phone">
+          <el-input v-model="form.phone" style="width: 350px;" />
+        </el-form-item>
+        <el-form-item label="分配数量">
+          <el-input
+            @change="quickSelectLockers"
+            :min="1"
+            :max="999"
+            v-model="num"
+            label="输入要分配的数量"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="常用数量">
+          <el-tag
+            effect="dark"
+            v-for="i in [1, 2, 3, 4, 5, 10, 20]"
+            @click="quickSelectLockers(i)"
+            :type="num == i ? 'success' : ''"
+          >
+            {{ i }}
+          </el-tag>
+        </el-form-item>
+        <el-form-item label="储物柜" prop="lockerIds">
+          <el-select
+            v-model="form.lockerIds"
+            multiple
+            style="width: 188px;"
+            placeholder="请选择"
+            filterable
+            default-first-option
+            clearable
+          >
+            <el-option
+              v-for="item in lockerList"
+              :key="item.id"
+              :value="item.id"
+              :label="'编号' + item.name"
+            >
+              编号{{ item.number }}
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="起租时间" prop="rentTime">
+          <el-date-picker v-model="form.rentTime" type="datetime" />
+        </el-form-item>
+        <el-form-item label="备注" prop="remark">
+          <el-input
+            v-model="form.remark"
+            style="width: 350px;"
+            type="textarea"
+          />
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button size="small" type="text" @click="cancel">取消</el-button>
+        <el-button
+          size="small"
+          v-loading="formLoading"
+          type="primary"
+          @click="quickSave"
+        >
+          确认
+        </el-button>
+      </div>
+    </el-dialog>
+    <!-- end of 快速新增窗口 -->
 
     <!-- 查看窗口 -->
     <el-dialog
@@ -205,11 +318,7 @@
             <i class="el-icon-tickets"></i>
             租用储物柜
           </template>
-          <el-tag
-            size="small"
-            v-for="locker in form.lockers"
-            :key="locker.number"
-          >
+          <el-tag size="small" v-for="locker in form.lockers" :key="locker.id">
             编号{{ locker.number }}
           </el-tag>
         </el-descriptions-item>
@@ -278,11 +387,7 @@
             <i class="el-icon-tickets"></i>
             租用储物柜
           </template>
-          <el-tag
-            size="small"
-            v-for="locker in form.lockers"
-            :key="locker.number"
-          >
+          <el-tag size="small" v-for="locker in form.lockers" :key="locker.id">
             编号{{ locker.number }}
           </el-tag>
         </el-descriptions-item>
@@ -493,7 +598,7 @@ export default {
         Filter: '',
         Sorting: '',
         SkipCount: 0,
-        MaxResultCount: 10,
+        MaxResultCount: 50,
       },
       appListQuery: {
         Filter: '',
@@ -501,6 +606,7 @@ export default {
         SkipCount: 0,
         MaxResultCount: 100,
       },
+      num: 1,
       page: 1,
       dialogFormVisible: false,
       multipleSelection: [],
@@ -508,6 +614,7 @@ export default {
       isEdit: false,
       detailFormVisible: false,
       returnFormVisible: false,
+      dialogQuickApplyFormVisible: false,
     }
   },
   created() {
@@ -516,6 +623,45 @@ export default {
     this.getLockers()
   },
   methods: {
+    quickSelectLockers(currentValue) {
+      this.num = currentValue
+      let selectedNum = 0
+      let { lockerIds } = this.form
+
+      let sum = lockerIds.length
+      if (sum == this.num) {
+        return
+      }
+      if (sum < this.num) {
+        for (const locker of this.lockerList) {
+          if (!lockerIds.includes(locker.id)) {
+            sum += 1
+            lockerIds.push(locker.id)
+          }
+          if (sum == this.num) {
+            break
+          }
+        }
+      } else if (sum > this.num) {
+        for (const locker of this.lockerList) {
+          if (lockerIds.includes(locker.id)) {
+            sum -= 1
+            lockerIds = lockerIds.filter((x) => x != locker.id)
+          }
+          if (sum == this.num) {
+            break
+          }
+        }
+      }
+
+      if (sum != this.num) {
+        this.$message.warning(`可用储物柜不足 ${this.num}个 `)
+      }
+    },
+    closeQuickApplyForm() {
+      this.dialogQuickApplyFormVisible = false
+      this.$refs.form.clearValidate()
+    },
     cancelReturn() {
       this.returnFormVisible = false
     },
@@ -591,22 +737,48 @@ export default {
                 this.formLoading = false
               })
           } else {
-            this.$axios
-              .posts('/api/shared-locker/rent/rent', this.form)
-              .then((response) => {
-                this.formLoading = false
-                this.$notify({
-                  title: '成功',
-                  message: '新增成功',
-                  type: 'success',
-                  duration: 2000,
-                })
-                this.dialogFormVisible = false
-                this.getList()
-              })
-              .catch(() => {
-                this.formLoading = false
-              })
+            this.sumbitApply()
+          }
+        }
+      })
+    },
+    sumbitApply() {
+      this.formLoading = true
+      this.$axios
+        .posts('/api/shared-locker/rent/rent', this.form)
+        .then((response) => {
+          this.formLoading = false
+          this.$notify({
+            title: '成功',
+            message: '新增成功',
+            type: 'success',
+            duration: 2000,
+          })
+          this.dialogFormVisible = false
+          this.dialogQuickApplyFormVisible = false
+          this.getList()
+        })
+        .catch(() => {
+          this.formLoading = false
+        })
+    },
+    quickSave() {
+      this.$refs.form.validate((valid) => {
+        if (valid) {
+          if (this.num != this.form.lockerIds.length) {
+            this.$confirm(
+              `储物柜分配数量(${this.num})与可用数量不一致(${this.form.lockerIds.length})，是否继续提交?`,
+              '提示',
+              {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning',
+              },
+            ).then(() => {
+              this.sumbitApply()
+            })
+          } else {
+            this.sumbitApply()
           }
         }
       })
@@ -658,14 +830,23 @@ export default {
         }
       })
     },
+    resetForm() {
+      for (const i in this.form) {
+        if (i == 'lockerIds') this.form[i] = []
+        else if (typeof this.form[i] == 'string') this.form[i] = ''
+      }
+      if (this.$refs.form) this.$refs.form.clearValidate()
+      this.lockerList = []
+    },
     handleCreate() {
       this.formTitle = '新增租用申请'
       this.isEdit = false
-      for (const i in this.form) {
-        if (typeof this.form[i]) this.form[i] = ''
-      }
-      this.getLockers()
+      this.resetForm()
       this.dialogFormVisible = true
+    },
+    handleQuickCreate() {
+      this.resetForm()
+      this.dialogQuickApplyFormVisible = true
     },
     handleDelete(row) {
       this.$confirm('是否删除这条记录?', '提示', {
