@@ -66,10 +66,13 @@ public static class SharedLockerDbContextModelCreatingExtensions
             b.Property(x => x.Phone).HasMaxLength(LockerRentConst.MaxLockerRentPhoneLength);
             b.Property(x => x.Remark).HasMaxLength(LockerRentConst.MaxLockerRentRemarkLength);
             b.Property(x => x.ReturnRemark).HasMaxLength(LockerRentConst.MaxLockerRentReturnRemarkLength);
+            b.Property(x => x.PinyinName).HasMaxLength(LockerRentConst.MaxLockerRentPinyinNameLength);
+            b.Property(x => x.FullPinyinName).HasMaxLength(LockerRentConst.MaxLockerRentFullPinyinNameLength);
             b.HasMany(x => x.Logs).WithOne(log => log.LockerRent);
             b.HasMany(x => x.RentInfos).WithOne(c => c.LockerRent);
 
             b.HasIndex(x => x.Name);
+            b.HasIndex(x => x.PinyinName);
             b.HasIndex(x => x.Phone);
             b.HasIndex(x => x.Status);
             b.HasIndex(x => x.AppId);

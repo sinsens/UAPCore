@@ -80,7 +80,7 @@ namespace SharedLocker.Domain.SharedLockers
                 .WhereIf(!input.Filter.IsNullOrWhiteSpace(), x => EF.Functions.Like(x.Name, likeFilter) || EF.Functions.Like(x.Number.ToString(), likeFilter));
 
             var count = await query.CountAsync();
-            var lockers = await query.PageBy(input).OrderBy(x => x.Status).ThenBy(x => x.Id).ToListAsync();
+            var lockers = await query.OrderBy(x => x.Status).ThenByDescending(x => x.Id).PageBy(input).ToListAsync();
 
             return new PagedResultDto<LockerDto>
             {

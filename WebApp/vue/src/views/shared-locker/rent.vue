@@ -5,10 +5,11 @@
         v-model="listQuery.Filter"
         clearable
         size="small"
-        placeholder="搜索..."
+        placeholder="搜索手机号码或姓名拼音"
         style="width: 200px;"
         class="filter-item"
         @keyup.enter.native="handleFilter"
+        @change="handleFilter"
       />
       <el-select v-model="listQuery.Status" @change="handleFilter">
         <el-option
@@ -267,7 +268,7 @@
             type="danger"
             @click="handleDiscard"
             size="small"
-            v-if="form.status != 1"
+            v-if="form.status != 10"
             v-loading="formLoading"
             :v-permission="[
               'SharedLocker.LockerRent.Create',
@@ -281,7 +282,7 @@
             @click="handleReturn"
             size="small"
             v-loading="formLoading"
-            v-if="form.status == 0"
+            v-if="form.status == 1"
           >
             退租
           </el-button>
@@ -301,6 +302,13 @@
         </el-descriptions-item>
         <el-descriptions-item>
           <template slot="label">
+            <i class="el-icon-microphone"></i>
+            姓名拼音
+          </template>
+          {{ form.fullPinyinName }}
+        </el-descriptions-item>
+        <el-descriptions-item>
+          <template slot="label">
             <i class="el-icon-mobile-phone"></i>
             联系电话
           </template>
@@ -313,7 +321,7 @@
           </template>
           {{ form.rentTime | formatDateTime }}
         </el-descriptions-item>
-        <el-descriptions-item>
+        <el-descriptions-item span="2">
           <template slot="label">
             <i class="el-icon-tickets"></i>
             租用储物柜
@@ -370,6 +378,13 @@
         </el-descriptions-item>
         <el-descriptions-item>
           <template slot="label">
+            <i class="el-icon-microphone"></i>
+            姓名拼音
+          </template>
+          {{ form.fullPinyinName }}
+        </el-descriptions-item>
+        <el-descriptions-item>
+          <template slot="label">
             <i class="el-icon-mobile-phone"></i>
             联系电话
           </template>
@@ -382,7 +397,7 @@
           </template>
           {{ form.rentTime | formatDateTime }}
         </el-descriptions-item>
-        <el-descriptions-item>
+        <el-descriptions-item span="2">
           <template slot="label">
             <i class="el-icon-tickets"></i>
             租用储物柜
@@ -404,14 +419,18 @@
             ref="form"
             :inline="true"
             :model="form"
-            :rules="rules"
+            :rules="returnRules"
             size="small"
             label-width="100px"
           >
-            <el-form-item v-if="form.id" label="退租时间" prop="returnTime">
+            <el-form-item
+              v-if="form.id != ''"
+              label="退租时间"
+              prop="returnTime"
+            >
               <el-date-picker v-model="form.returnTime" type="datetime" />
             </el-form-item>
-            <el-form-item v-if="form.id" label="备注" prop="returnRemark">
+            <el-form-item v-if="form.id != ''" label="备注" prop="returnRemark">
               <el-input
                 v-model="form.returnRemark"
                 style="width: 350px;"
@@ -434,6 +453,7 @@
             'SharedLocker.LockerRent.Create',
             'SharedLocker.LockerRent.Update',
           ]"
+          v-if="form.status == 1"
         >
           确认
         </el-button>
@@ -454,11 +474,11 @@
         prop="name"
         sortable="custom"
         align="center"
-        width="150px"
+        width="180px"
       >
         <template slot-scope="{ row }">
           <span class="link-type" @click="handleUpdate(row)">
-            {{ row.name }}
+            {{ row.name + (row.fullPinyinName ? ` [${row.fullPinyinName}]` : '') }}
           </span>
         </template>
       </el-table-column>
@@ -480,7 +500,7 @@
         prop="statusDesc"
         sortable="custom"
         align="center"
-        width="200px"
+        width="100px"
       >
         <template slot-scope="scope">
           <span>{{ scope.row.statusDesc }}</span>
@@ -489,13 +509,20 @@
       <el-table-column label="操作" align="center">
         <template slot-scope="{ row }">
           <el-button
-            type="primary"
+            type="info"
             size="mini"
             @click="handleUpdate(row)"
-            icon="el-icon-edit"
+            icon="el-icon-view"
           />
           <el-button
             v-if="row.status == 1"
+            type="primary"
+            size="mini"
+            @click="handleOpenReturnDialog(row)"
+            icon="el-icon-check"
+          />
+          <el-button
+            v-if="row.status == 10"
             type="danger"
             size="mini"
             @click="handleDelete(row)"
@@ -526,16 +553,16 @@ const statusOptions = [
     name: '全部',
   },
   {
-    id: 0,
+    id: 1,
     name: '租用中',
   },
   {
-    id: 1,
-    name: '已作废',
+    id: 8,
+    name: '已结束',
   },
   {
-    id: 9,
-    name: '已结束',
+    id: 10,
+    name: '已作废',
   },
 ]
 
@@ -572,6 +599,8 @@ export default {
         lockerIds: [
           { required: true, message: '请选择储物柜', trigger: 'blur' },
         ],
+      },
+      returnRules: {
         returnTime: [
           { required: true, message: '请选择退租时间', trigger: 'blur' },
         ],
@@ -785,6 +814,12 @@ export default {
     },
     handleReturn() {
       this.returnFormVisible = true
+    },
+    handleOpenReturnDialog(row) {
+      if (row) {
+        this.fetchData(row.id)
+        this.returnFormVisible = true
+      }
     },
     handleDiscard() {
       this.$confirm('是否作废?', '提示', {

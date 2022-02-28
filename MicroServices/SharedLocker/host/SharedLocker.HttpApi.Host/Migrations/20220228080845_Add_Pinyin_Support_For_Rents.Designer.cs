@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SharedLocker.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
@@ -12,9 +13,10 @@ using Volo.Abp.EntityFrameworkCore;
 namespace SharedLocker.Migrations
 {
     [DbContext(typeof(SharedLockerHttpApiHostMigrationsDbContext))]
-    partial class SharedLockerHttpApiHostMigrationsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220228080845_Add_Pinyin_Support_For_Rents")]
+    partial class Add_Pinyin_Support_For_Rents
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

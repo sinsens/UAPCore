@@ -11,6 +11,7 @@ using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Domain.Services;
 using Volo.Abp.Users;
 using SharedLocker.Localization;
+using ToolGood.Words.Pinyin;
 
 namespace SharedLocker.SharedLockers
 {
@@ -68,6 +69,12 @@ namespace SharedLocker.SharedLockers
             // 关联储物柜
             var lockerRent = new LockerRent(GuidGenerator.Create(), CurrentTenant.Id, appId, name, phone, remark, rentTime ?? Clock.Now);
             lockerRent.SetLockers(lockerIds);
+
+            // 获取拼音
+            var pinyinName = WordsHelper.GetFirstPinyin(name);
+            var fullPinyinName = WordsHelper.GetPinyinForName(name, true);
+            lockerRent.SetPinyinName(pinyinName, fullPinyinName);
+            WordsHelper.ClearCache();
 
             // 添加日志
             var description = $"租用储物柜：{string.Join(",", lockers.Select(x => x.Number))}";

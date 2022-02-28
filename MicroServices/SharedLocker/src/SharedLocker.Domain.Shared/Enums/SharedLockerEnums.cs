@@ -36,18 +36,18 @@ namespace SharedLocker.Enums
         /// 租用中
         /// </summary>
 		[Description("租用中")]
-        InService = 0,
-
-        /// <summary>
-        /// 作废
-        /// </summary>
-		[Description("已作废")]
-        Discard = 1,
+        InService = 1,
 
         /// <summary>
         /// 已结束
         /// </summary>
 		[Description("已结束")]
-        EndService = 9,
+        EndService = 8,
+
+        /// <summary>
+        /// 作废
+        /// </summary>
+		[Description("已作废")]
+        Discard = 10,
     }
 }

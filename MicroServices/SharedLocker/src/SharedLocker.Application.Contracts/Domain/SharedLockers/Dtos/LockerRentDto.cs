@@ -14,6 +14,16 @@ namespace SharedLocker.Domain.SharedLockers.Dtos
         public string Name { get; set; }
 
         /// <summary>
+        /// 姓名拼音首字母
+        /// </summary>
+        public string PinyinName { get; set; }
+
+        /// <summary>
+        /// 姓名全部拼音
+        /// </summary>
+        public string FullPinyinName { get; set; }
+
+        /// <summary>
         /// 联系电话
         /// </summary>
         public string Phone { get; set; }

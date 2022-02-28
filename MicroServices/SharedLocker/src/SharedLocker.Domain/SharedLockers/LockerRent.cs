@@ -30,11 +30,22 @@ namespace SharedLocker.Domain.SharedLockers
             SetPhone(phone);
             SetRemark(remark);
             SetRentTime(rentTime);
+            SetStatus(LockerRentStatus.InService);
         }
         /// <summary>
         /// 联系人
         /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// 姓名拼音首字母
+        /// </summary>
+        public string PinyinName { get; set; }
+
+        /// <summary>
+        /// 姓名拼音全字母
+        /// </summary>
+        public string FullPinyinName { get; set; }
 
         public Guid? TenantId { get; set; }
 
@@ -110,12 +121,32 @@ namespace SharedLocker.Domain.SharedLockers
         }
 
         /// <summary>
+        /// 设置联系人拼音名称
+        /// </summary>
+        /// <param name="pinyinName">姓名拼音首字母</param>
+        /// <param name="fullPinyinName">姓名全部拼音</param>
+        public void SetPinyinName(string pinyinName, string fullPinyinName)
+        {
+            PinyinName = pinyinName;
+            FullPinyinName = fullPinyinName;
+        }
+
+        /// <summary>
         /// 设置联系电话
         /// </summary>
         /// <param name="phone"></param>
         public void SetPhone(string phone)
         {
             Phone = phone;
+        }
+
+        /// <summary>
+        /// 设置状态
+        /// </summary>
+        /// <param name="rentStatus"></param>
+        public void SetStatus(LockerRentStatus rentStatus)
+        {
+            Status = rentStatus;
         }
 
         /// <summary>

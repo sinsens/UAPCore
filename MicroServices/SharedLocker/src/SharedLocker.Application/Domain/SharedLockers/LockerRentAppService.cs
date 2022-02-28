@@ -58,10 +58,13 @@ namespace SharedLocker.Domain.SharedLockers
                 .WhereIf(input.AppId.HasValue, x => x.AppId == input.AppId)
                 .WhereIf(input.Status?.Any() == true, x => input.Status.Contains(x.Status))
                 .WhereIf(!input.Filter.IsNullOrWhiteSpace(),
-                    x => EF.Functions.Like(x.Name, likeFilter) || EF.Functions.Like(x.Phone, likeFilter));
+                    x => 
+                        EF.Functions.Like(x.Name, likeFilter) || EF.Functions.Like(x.Phone, likeFilter) ||
+                        EF.Functions.Like(x.PinyinName, likeFilter)
+                    );
 
             var count = await query.CountAsync();
-            var lockerRents = await query.PageBy(input).OrderBy(x=> x.Status).ThenBy(x=>x.Id).ToListAsync();
+            var lockerRents = await query.OrderBy(x=> x.Status).ThenByDescending(x=>x.Id).PageBy(input).ToListAsync();
 
             return new PagedResultDto<LockerRentDto>
             {
