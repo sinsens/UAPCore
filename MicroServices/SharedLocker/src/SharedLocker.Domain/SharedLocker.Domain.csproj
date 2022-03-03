@@ -10,6 +10,7 @@
 	<ItemGroup>
 		<PackageReference Include="ToolGood.Words.Pinyin" Version="3.0.3.1" />
 		<PackageReference Include="UAP.Shared" Version="1.0.0" />
+		<PackageReference Include="UAP.Domain" Version="1.0.0" />
 		<PackageReference Include="Volo.Abp.Ddd.Domain" Version="$(AbpVersion)" />
 		<PackageReference Include="Volo.Abp.EntityFrameworkCore" Version="$(AbpVersion)" />
 		<ProjectReference Include="..\SharedLocker.Domain.Shared\SharedLocker.Domain.Shared.csproj" />

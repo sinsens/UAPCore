@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "组件",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "no-data": "/uni_modules/no-data/components/no-data/no-data"
+  }
+}

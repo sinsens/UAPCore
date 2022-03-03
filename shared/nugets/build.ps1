@@ -7,6 +7,8 @@ $parentFolder = Get-Location
 
 dotnet clean
 
+dotnet build -c Release
+
 dotnet pack -c Release
 
 $files = Get-ChildItem -Path ./ -Recurse  -Name *.nupkg

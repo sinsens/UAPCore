@@ -6,7 +6,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SharedLocker.Domain.SharedLockers.Dtos
 {
-    [Serializable]
     public class CreateUpdateLockerDto
     {
         /// <summary>

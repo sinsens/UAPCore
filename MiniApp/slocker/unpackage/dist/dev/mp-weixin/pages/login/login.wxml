@@ -1,0 +1,1 @@
+<view><button data-event-opts="{{[['tap',[['login']]]]}}" bindtap="__e">点击授权登录</button></view>

@@ -8,9 +8,9 @@ namespace Business.AppUserManagement.Dto
     public class AppUserDto : EntityDto<Guid>
     {
         /// <summary>
-        /// 名称
+        /// 姓名
         /// </summary>
-        [Display(Name = "名称")]
+        [Display(Name = "姓名")]
         [Required(ErrorMessage = "{0}是必填项")]
         [StringLength(AppUserConsts.MaxNameLength, ErrorMessage = "{0}不能超过{1}个字符长度")]
         public string Name { get; set; }

@@ -11,7 +11,7 @@
     "Permission:Create": "添加",
     "Permission:Update": "编辑",
     "Permission:Delete": "删除",
-	"Permission:LockerRent": "出租管理",
+    "Permission:LockerRent": "出租管理",
     "Menu:Locker": "储物柜管理",
     "Locker": "储物柜",
     "LockerName": "名称",
@@ -31,7 +31,7 @@
     "LockerRentRentTime": "起租时间",
     "LockerRentRemark": "备注",
     "LockerRentStatus": "状态",
-    "LockerRentLockerZero": "请选择储物柜",
+    "LockerRentLockerZero": "储物柜数量不能为0",
     "LockerRentNumberNotEqual": "租用储物柜数量和可用数量不一致，请刷新数据再重新请求",
     "LockerRentStatusError": "出租信息状态错误",
     "LockerRentReturnTime": "退租时间",
@@ -47,6 +47,12 @@
     "ParameterError": "参数错误",
     "LockerDuplicatedNumber": "此应用下已有相同编号的储物柜",
     "LockerIsBusy": "此储物柜正在出租中",
-    "LockerCannotDelete": "储物柜有出租记录，禁止删除"
+    "LockerCannotDelete": "储物柜有出租记录，禁止删除",
+
+    "HasPendingAuditApply": "您当前有正在审核中的申请",
+    "HasInServiceApply": "您当前有正在租用中的申请",
+    "DiscardReasonCannotBeEmpty": "必须填写作废原因",
+    "HasDiscardByApplier": "该申请单已由申请人作废",
+    "RemarkCannotBeEmpty": "请填写备注"
   }
 }

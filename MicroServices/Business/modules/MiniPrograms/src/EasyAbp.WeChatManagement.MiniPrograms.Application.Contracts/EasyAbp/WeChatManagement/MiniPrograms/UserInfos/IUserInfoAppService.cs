@@ -13,5 +13,7 @@ namespace EasyAbp.WeChatManagement.MiniPrograms.UserInfos
             PagedAndSortedResultRequestDto>
     {
         Task<UserInfoDto> UpdateAsync(UserInfoModel input);
+
+        ValueTask UpdateAsync(Guid id, UpdateNameAndPhoneDto input);
     }
 }

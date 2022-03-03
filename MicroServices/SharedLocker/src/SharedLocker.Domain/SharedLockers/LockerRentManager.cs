@@ -90,6 +90,8 @@ namespace SharedLocker.SharedLockers
 
             await _repositoryLocker.UpdateManyAsync(lockers);
 
+            
+
             return lockerRent;
         }
 
@@ -178,9 +180,11 @@ namespace SharedLocker.SharedLockers
                 throw new UserFriendlyException(_stringLocalizer["LockerRentStatusError"]);
             }
             
+            /*
             var lockerLinkIds = lockerRent.RentInfos.Select(x => x.Id);
 
             await _repositoryLink.DeleteManyAsync(lockerLinkIds);
+            */
             await _repository.DeleteAsync(id);
         }
 

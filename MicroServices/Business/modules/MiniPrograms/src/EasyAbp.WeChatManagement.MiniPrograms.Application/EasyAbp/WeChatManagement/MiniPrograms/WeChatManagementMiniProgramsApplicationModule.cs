@@ -1,12 +1,13 @@
-﻿using System;
-using EasyAbp.Abp.WeChat;
+﻿using EasyAbp.Abp.WeChat;
 using EasyAbp.Abp.WeChat.MiniProgram;
 using EasyAbp.Abp.WeChat.MiniProgram.Infrastructure.OptionsResolve;
 using EasyAbp.WeChatManagement.Common;
 using Microsoft.Extensions.DependencyInjection;
-using Volo.Abp.AutoMapper;
-using Volo.Abp.Modularity;
+using System;
 using Volo.Abp.Application;
+using Volo.Abp.AutoMapper;
+using Volo.Abp.Identity.AspNetCore;
+using Volo.Abp.Modularity;
 
 namespace EasyAbp.WeChatManagement.MiniPrograms
 {
@@ -16,7 +17,8 @@ namespace EasyAbp.WeChatManagement.MiniPrograms
         typeof(AbpDddApplicationModule),
         typeof(AbpAutoMapperModule),
         typeof(AbpWeChatMiniProgramModule),
-        typeof(WeChatManagementCommonApplicationModule)
+        typeof(WeChatManagementCommonApplicationModule),
+        typeof(AbpIdentityAspNetCoreModule)
     )]
     public class WeChatManagementMiniProgramsApplicationModule : AbpModule
     {
@@ -27,12 +29,12 @@ namespace EasyAbp.WeChatManagement.MiniPrograms
             {
                 options.AddMaps<WeChatManagementMiniProgramsApplicationModule>(validate: true);
             });
-            
+
             context.Services.AddHttpClient(WeChatMiniProgramConsts.IdentityServerHttpClientName, c =>
             {
                 c.Timeout = TimeSpan.FromMilliseconds(5000);
             });
-            
+
             Configure<AbpWeChatMiniProgramResolveOptions>(options =>
             {
                 if (!options.Contributors.Exists(x => x.Name == ClaimsWeChatMiniProgramOptionsResolveContributor.ContributorName))

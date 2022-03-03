@@ -1,14 +1,17 @@
 using System;
 using JetBrains.Annotations;
+using UAP.Shared;
 using Volo.Abp.Domain.Entities.Auditing;
 using Volo.Abp.MultiTenancy;
 
 namespace EasyAbp.WeChatManagement.MiniPrograms.UserInfos
 {
-    public class UserInfo : FullAuditedAggregateRoot<Guid>, IUserInfo, IMultiTenant
+    public class UserInfo : FullAuditedAggregateRoot<Guid>, IUserInfo, IMultiTenant, IMultiApp
     {
         public virtual Guid? TenantId { get; protected set; }
-        
+
+        public virtual Guid? AppId { get; protected set; }
+
         public virtual Guid UserId { get; protected set; }
 
         [CanBeNull]
@@ -37,10 +40,12 @@ namespace EasyAbp.WeChatManagement.MiniPrograms.UserInfos
 
         public UserInfo(Guid id,
             Guid? tenantId,
+            Guid? appId,
             Guid userId,
             UserInfoModel model) : base(id)
         {
             TenantId = tenantId;
+            AppId = appId;
             UserId = userId;
 
             UpdateInfo(model);

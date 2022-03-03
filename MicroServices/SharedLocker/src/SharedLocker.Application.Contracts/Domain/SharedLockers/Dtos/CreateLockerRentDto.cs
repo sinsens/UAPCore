@@ -3,11 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
 
 namespace SharedLocker.Domain.SharedLockers.Dtos
 {
-    [Serializable]
     public class CreateLockerRentDto
     {
         /// <summary>

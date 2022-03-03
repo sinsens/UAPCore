@@ -99,5 +99,21 @@ public static class SharedLockerDbContextModelCreatingExtensions
             b.HasOne(x => x.LockerRent).WithMany(s => s.RentInfos).HasForeignKey(x => x.RentId);
             b.HasOne(x => x.Locker).WithMany(s => s.RentInfos).HasForeignKey(x => x.LockerId);
         });
+
+        builder.Entity<LockerRentApply>(b =>
+        {
+            b.ToTable(SharedLockerDbProperties.DbTablePrefix + "LockerRentApplies", SharedLockerDbProperties.DbSchema);
+            b.ConfigureByConvention();
+
+            b.Property(x => x.Name).HasMaxLength(LockerRentApplyConst.MaxLockerRentApplyNameLength);
+            b.Property(x => x.Phone).HasMaxLength(LockerRentApplyConst.MaxLockerRentApplyPhoneLength);
+            b.Property(x => x.PinyinName).HasMaxLength(LockerRentApplyConst.MaxLockerRentApplyPinyinNameLength);
+            b.Property(x => x.FullPinyinName).HasMaxLength(LockerRentApplyConst.MaxLockerRentApplyFullPinyinNameLength);
+            b.Property(x => x.Auditor).HasMaxLength(LockerRentApplyConst.MaxLockerRentApplyNameLength);
+            b.Property(x => x.AuditRemark).HasMaxLength(LockerRentApplyConst.MaxLockerRentApplyRemarkLength);
+
+            b.HasOne(x => x.LockerRent);
+
+        });
     }
 }

@@ -56,7 +56,6 @@
       :close-on-click-modal="false"
       :title="formTitle"
       @close="cancel()"
-      width="500px"
     >
       <el-form
         ref="form"
@@ -78,7 +77,7 @@
           >
             <el-option
               v-for="item in appList"
-              :key="item.name"
+              :key="item.id"
               :label="item.name"
               :value="item.id"
             ></el-option>
@@ -151,7 +150,6 @@
       :close-on-click-modal="false"
       title="快速新增租用申请"
       @close="closeQuickApplyForm"
-      width="500px"
     >
       <el-form
         ref="form"
@@ -173,7 +171,7 @@
           >
             <el-option
               v-for="item in appList"
-              :key="item.name"
+              :key="item.id"
               :label="item.name"
               :value="item.id"
             ></el-option>
@@ -198,6 +196,7 @@
           <el-tag
             effect="dark"
             v-for="i in [1, 2, 3, 4, 5, 10, 20]"
+            :key="i"
             @click="quickSelectLockers(i)"
             :type="num == i ? 'success' : ''"
           >
@@ -236,7 +235,9 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button size="small" type="text" @click="cancel">取消</el-button>
+        <el-button size="small" type="text" @click="closeQuickApplyForm">
+          取消
+        </el-button>
         <el-button
           size="small"
           v-loading="formLoading"
@@ -253,9 +254,7 @@
     <el-dialog
       :visible.sync="detailFormVisible"
       :close-on-click-modal="false"
-      :show-close="false"
       title="出租详情"
-      width="800px"
     >
       <el-descriptions
         class="margin-top"
@@ -366,7 +365,6 @@
       :close-on-click-modal="false"
       title="退租"
       @close="cancelReturn"
-      width="800px"
     >
       <el-descriptions border :column="2">
         <el-descriptions-item labelStyle="width:120px">
@@ -478,7 +476,9 @@
       >
         <template slot-scope="{ row }">
           <span class="link-type" @click="handleUpdate(row)">
-            {{ row.name + (row.fullPinyinName ? ` [${row.fullPinyinName}]` : '') }}
+            {{
+              row.name + (row.fullPinyinName ? ` [${row.fullPinyinName}]` : '')
+            }}
           </span>
         </template>
       </el-table-column>
@@ -868,6 +868,7 @@ export default {
     resetForm() {
       for (const i in this.form) {
         if (i == 'lockerIds') this.form[i] = []
+        if (i == 'rentTime') this.form[i] = ''
         else if (typeof this.form[i] == 'string') this.form[i] = ''
       }
       if (this.$refs.form) this.$refs.form.clearValidate()
@@ -882,6 +883,7 @@ export default {
     handleQuickCreate() {
       this.resetForm()
       this.dialogQuickApplyFormVisible = true
+      this.form['rentTime'] = new Date()
     },
     handleDelete(row) {
       this.$confirm('是否删除这条记录?', '提示', {
@@ -943,3 +945,9 @@ export default {
   },
 }
 </script>
+
+<style>
+.el-dialog {
+  min-width: 370px;
+}
+</style>

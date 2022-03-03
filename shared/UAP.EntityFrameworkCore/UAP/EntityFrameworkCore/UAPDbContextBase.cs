@@ -55,7 +55,6 @@ namespace UAP.EntityFrameworkCore
 					Expression<Func<TEntity, bool>> multiTenantFilter = e => EF.Property<Guid>(e, "TenantId") == CurrentTenantId;
                 expression = expression == null ? multiTenantFilter : CombineExpressions(expression, multiTenantFilter);
 				}
-                
             }
 
             if (typeof(IMultiApp).IsAssignableFrom(typeof(TEntity)))

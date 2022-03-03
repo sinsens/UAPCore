@@ -177,8 +177,8 @@ namespace AuthServer.Host
 
             await CreateClientAsync(
                 name: "business-app",
-                scopes: new[] { "InternalGateway", "BaseService" },
-                grantTypes: new[] { "client_credentials" },
+                scopes: new[] { "InternalGateway", "BaseService", "BusinessService", "SharedLockerService" },
+                grantTypes: new[] { "client_credentials", "WeChatMiniProgram_credentials"  },
                 secret: "1q2w3e*".Sha256(),
                 permissions: new[] { IdentityPermissions.Users.Default, IdentityPermissions.UserLookup.Default }
             );
@@ -195,8 +195,8 @@ namespace AuthServer.Host
                 name: "uni-app",
                 scopes: commonScopes.Append("BaseService").Append("WebAppGateway").Append("BusinessService").Append("SharedLockerService"),
                 grantTypes: new[] { "client_credentials","WeChatMiniProgram_credentials" },
-                secret: "1q2w3e*".Sha256(),
-                permissions: new[] { UniAppPermissions.Pages.Default, UniAppPermissions.Functions.Default }
+                secret: "1q2w3e*".Sha256()
+                //permissions: new[] { UniAppPermissions.Pages.Default, UniAppPermissions.Functions.Default }
             );
         }
 

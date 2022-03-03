@@ -32,10 +32,16 @@ namespace EasyAbp.WeChatManagement.MiniPrograms.UserInfos
             return _service.GetListAsync(input);
         }
 
-        [HttpPut]
+        [HttpPut("update")]
         public Task<UserInfoDto> UpdateAsync(UserInfoModel input)
         {
             return _service.UpdateAsync(input);
+        }
+
+        [HttpPut("updateNameAndPhone/{id}")]
+        public ValueTask UpdateAsync(Guid id, UpdateNameAndPhoneDto input)
+        {
+            return _service.UpdateAsync(id, input);
         }
     }
 }

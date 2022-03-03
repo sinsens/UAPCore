@@ -50,4 +50,40 @@ namespace SharedLocker.Enums
 		[Description("已作废")]
         Discard = 10,
     }
+
+    /// <summary>
+    /// 租用申请状态
+    /// </summary>
+    public enum LockerRentApplyStatus
+    {
+        /// <summary>
+        /// 审核中
+        /// </summary>
+        [Description("审核中")]
+        PendingAudit = 0,
+
+        /// <summary>
+        /// 已通过
+        /// </summary>
+        [Description("已通过")]
+        Accepted = 2,
+
+        /// <summary>
+        /// 已拒绝
+        /// </summary>
+        [Description("已拒绝")]
+        Rejected = 5,
+
+        /// <summary>
+        /// 作废
+        /// </summary>
+		[Description("已作废")]
+        Discard = 10,
+
+        /// <summary>
+        /// 申请人作废
+        /// </summary>
+		[Description("已作废")]
+        Discard2 = 11,
+    }
 }

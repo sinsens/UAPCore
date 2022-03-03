@@ -8,18 +8,17 @@ namespace UAP.Domain.MultiApp
 {
     public class NullCurrentApp : ICurrentApp, IScopedDependency
     {
-        public Guid? AppId { get => GetCurrentApp(); }
+        public Guid? AppId => GetCurrentApp();
 
         private Guid? appId;
 
         private bool hasLoad = false;
 
-        private readonly AbpLazyServiceProvider serviceProvider;
-        public NullCurrentApp(AbpLazyServiceProvider abpLazyServiceProvider)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public NullCurrentApp(IHttpContextAccessor httpContextAccessor)
         {
-            serviceProvider = abpLazyServiceProvider;
+            _httpContextAccessor = httpContextAccessor;
         }
-
         private Guid? GetCurrentApp()
         {
             if (hasLoad)
@@ -29,9 +28,8 @@ namespace UAP.Domain.MultiApp
             lock (this)
             {
                 Guid id = default;
-                var httpContext = serviceProvider.LazyGetRequiredService<IHttpContextAccessor>();
-                var idString = httpContext.HttpContext?.Request.Query[CurrentAppConsts.AppIdKey].FirstOrDefault()
-                    ?? httpContext.HttpContext?.Request.Headers[CurrentAppConsts.AppIdKey];
+                var request = _httpContextAccessor.HttpContext?.Request;
+                var idString = request?.Headers[UAPConsts.AppIdKey] ?? request?.Query[UAPConsts.AppIdKey].FirstOrDefault();
                 if (Guid.TryParse(idString, out id))
                 {
                     appId = id;
