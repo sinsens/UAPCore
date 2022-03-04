@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SharedLocker.Domain.SharedLockers;
 using SharedLocker.Domain.SharedLockers.Dtos;
 using System;
@@ -12,10 +13,10 @@ namespace SharedLocker.Domain
     /// <summary>
     /// 储物柜管理
     /// </summary>
-    //[Authorize]
+    [Authorize]
     [RemoteService]
     [Route("/api/shared-locker/locker")]
-    public class LockerController: AbpController, ILockerAppService
+    public class LockerController: SharedLockerController, ILockerAppService
     {
         private readonly ILockerAppService _lockerAppService;
         public LockerController(ILockerAppService lockerAppService)

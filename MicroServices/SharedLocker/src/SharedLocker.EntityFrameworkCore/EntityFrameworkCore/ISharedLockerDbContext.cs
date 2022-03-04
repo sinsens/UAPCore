@@ -16,4 +16,5 @@ public interface ISharedLockerDbContext : IEfCoreDbContext
     DbSet<LockerRent> LockerRents { get; set; }
 
     DbSet<LockerRentInfo> LockerRentInfos { get; set; }
+    DbSet<LockerRentApply> LockerRentApplies { get; set; }
 }

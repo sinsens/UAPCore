@@ -1,30 +1,57 @@
 ﻿using SharedLocker.Domain.SharedLockers.Dtos;
+using System;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
+using Volo.Abp.Application.Services;
 
 namespace SharedLocker.Domain.SharedLockers
 {
-    internal interface IRentApplyAppService
+    public interface IRentApplyAppService : IApplicationService
     {
         /// <summary>
         /// 租用申请
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        ValueTask<LockerRentDto> RentApplyAsync(CreateLockerRentApplyDto input);
+        ValueTask<LockerRentApplyDto> ApplyAsync(CreateLockerRentApplyDto input);
+
+
+        /// <summary>
+        /// 获取
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        ValueTask<LockerRentApplyDto> GetAsync(Guid id);
 
         /// <summary>
         /// 审核申请
         /// </summary>
+        /// <param name="id"></param>
         /// <param name="input"></param>
         /// <returns></returns>
-        ValueTask AuditApplyAsync(AuditRentApplyDto input);
+        ValueTask AuditAsync(Guid id, AuditRentApplyDto input);
+
+        /// <summary>
+        /// 作废申请
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        ValueTask CancelAsync(Guid id, CancelApplyDto input);
+
+        /// <summary>
+        /// 作废申请
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        ValueTask DiscardAsync(Guid id, DiscardApplyDto input);
 
         /// <summary>
         /// 分页查询
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        Task<PagedResultDto<LockerRentDto>> GetListAsync(PagedAndSortedRentInfoResultCustomerRequestDto input);
+        ValueTask<PagedResultDto<LockerRentApplyDto>> GetListAsync(PagedAndSortedRentInfoResultCustomerRequestDto input);
     }
 }

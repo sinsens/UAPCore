@@ -53,6 +53,8 @@
     "HasInServiceApply": "您当前有正在租用中的申请",
     "DiscardReasonCannotBeEmpty": "必须填写作废原因",
     "HasDiscardByApplier": "该申请单已由申请人作废",
-    "RemarkCannotBeEmpty": "请填写备注"
+    "RemarkCannotBeEmpty": "请填写备注",
+    "DiscardByApplier": "申请人主动作废",
+    "ApplyHasBeenAudited":  "该申请单非待审核状态"
   }
 }

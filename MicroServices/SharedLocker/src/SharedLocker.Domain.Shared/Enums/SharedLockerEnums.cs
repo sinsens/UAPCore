@@ -75,15 +75,15 @@ namespace SharedLocker.Enums
         Rejected = 5,
 
         /// <summary>
-        /// 作废
+        /// 已取消
         /// </summary>
-		[Description("已作废")]
-        Discard = 10,
+		[Description("已取消")]
+        Canceled = 10,
 
         /// <summary>
         /// 申请人作废
         /// </summary>
 		[Description("已作废")]
-        Discard2 = 11,
+        Discard = 11,
     }
 }

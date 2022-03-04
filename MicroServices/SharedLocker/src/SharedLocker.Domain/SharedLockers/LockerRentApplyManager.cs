@@ -103,26 +103,53 @@ namespace SharedLocker.SharedLockers
         /// </summary>
         /// <param name="id"></param>
         /// <param name="reason">作废原因</param>
-        /// <param name="isApplier">申请人主动作废</param>
         /// <returns></returns>
         /// <exception cref="UserFriendlyException"></exception>
-        public async ValueTask DiscardAsync(Guid id, string reason, bool isApplier)
+        public async ValueTask DiscardAsync(Guid id, string reason)
         {
             var rentApply = await GetRentApplyAsync(id);
 
-            if (rentApply.Status != Enums.LockerRentApplyStatus.Discard2 && rentApply.Status != Enums.LockerRentApplyStatus.Discard)
+            if (rentApply.Status != Enums.LockerRentApplyStatus.Discard && rentApply.Status != Enums.LockerRentApplyStatus.Canceled)
             {
-                if(!isApplier && string.IsNullOrWhiteSpace(reason))
+                if(string.IsNullOrWhiteSpace(reason))
                 {
                     throw new UserFriendlyException(_stringLocalizer["DiscardReasonCannotBeEmpty"]);
                 }
 
-                rentApply.SetDiscard(Clock.Now, reason, isApplier);
+                rentApply.SetDiscard(Clock.Now, reason);
 
                 if (rentApply.LockerRentId.HasValue)
                 {
                     await _rentManager.DiscardAsync(rentApply.LockerRentId.Value);
                 }
+                await _repositoryApply.UpdateAsync(rentApply);
+            }
+        }
+
+        /// <summary>
+        /// 取消
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="reason">取消原因</param>
+        /// <returns></returns>
+        /// <exception cref="UserFriendlyException"></exception>
+        public async ValueTask CancelAsync(Guid id, string reason)
+        {
+            var rentApply = await GetRentApplyAsync(id);
+
+            if(rentApply.Status != LockerRentApplyStatus.PendingAudit)
+            {
+                throw new UserFriendlyException(_stringLocalizer["ApplyHasBeenAudited"]);
+            }
+
+            if (rentApply.Status != Enums.LockerRentApplyStatus.Discard && rentApply.Status != Enums.LockerRentApplyStatus.Canceled)
+            {
+                rentApply.SetCancel(Clock.Now, reason);
+                /*
+                if (rentApply.LockerRentId.HasValue)
+                {
+                    await _rentManager.DiscardAsync(rentApply.LockerRentId.Value);
+                }*/
                 await _repositoryApply.UpdateAsync(rentApply);
             }
         }
@@ -140,12 +167,12 @@ namespace SharedLocker.SharedLockers
         {
             var rentApply = await GetRentApplyAsync(id);
 
-            if(rentApply.Status == Enums.LockerRentApplyStatus.Discard2)
+            if(rentApply.Status == Enums.LockerRentApplyStatus.Discard)
             {
                 throw new UserFriendlyException(_stringLocalizer["HasDiscardByApplier"]);
             }
 
-            if(rentApply.Status == Enums.LockerRentApplyStatus.Accepted)
+            if(rentApply.Status != Enums.LockerRentApplyStatus.PendingAudit)
             {
                 return;
             }
@@ -180,7 +207,7 @@ namespace SharedLocker.SharedLockers
         {
             var lockerRent = await GetRentApplyAsync(id);
 
-            if (lockerRent.Status != Enums.LockerRentApplyStatus.Discard && lockerRent.Status != Enums.LockerRentApplyStatus.Discard2)
+            if (lockerRent.Status != Enums.LockerRentApplyStatus.Canceled && lockerRent.Status != Enums.LockerRentApplyStatus.Discard)
             {
                 throw new UserFriendlyException(_stringLocalizer["LockerRentStatusError"]);
             }

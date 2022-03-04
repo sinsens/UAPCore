@@ -35,12 +35,12 @@ namespace SharedLocker.SharedLockers
         /// <summary>
         /// 姓名拼音首字母
         /// </summary>
-        public string PinyinName { get; set; }
+        public string PinyinName { get; protected set; }
 
         /// <summary>
         /// 姓名拼音全字母
         /// </summary>
-        public string FullPinyinName { get; set; }
+        public string FullPinyinName { get; protected set; }
 
         /// <summary>
         /// 联系电话
@@ -72,11 +72,27 @@ namespace SharedLocker.SharedLockers
         /// </summary>
         public string AuditRemark { get; protected set; }
 
+        /// <summary>
+        /// 作废原因
+        /// </summary>
         public string DiscardReason { get; protected set; }
 
+        /// <summary>
+        /// 作废时间
+        /// </summary>
         public DateTime? DiscardTime { get; protected set; }
 
         public virtual Guid? LockerRentId { get; protected set; }
+
+        /// <summary>
+        /// 取消时间
+        /// </summary>
+        public DateTime? CancelTime { get; protected set; }
+
+        /// <summary>
+        /// 取消原因
+        /// </summary>
+        public virtual string CancelReason { get; protected set; }
 
         public virtual Guid UserId { get; protected set; }
 
@@ -101,7 +117,7 @@ namespace SharedLocker.SharedLockers
         /// <param name="dateTime">审核时间</param>
         public void SetAudit(LockerRentApplyStatus status, string username, string remark, DateTime dateTime)
         {
-            if (Status != LockerRentApplyStatus.Discard2)
+            if (Status != LockerRentApplyStatus.Discard)
             {
                 Auditor = username;
                 Status = status;
@@ -130,14 +146,27 @@ namespace SharedLocker.SharedLockers
         /// 设置作废
         /// </summary>
         /// <param name="reason">作废原因</param>
-        /// <param name="isApplier">是否申请人申请作废</param>
-        public void SetDiscard(DateTime dateTime,string reason, bool isApplier)
+        public void SetDiscard(DateTime dateTime,string reason)
         {
-            if(Status != LockerRentApplyStatus.Discard && Status != LockerRentApplyStatus.Discard2)
+            if(Status != LockerRentApplyStatus.Canceled && Status != LockerRentApplyStatus.Discard)
             {
                 DiscardTime = dateTime;
-                Status = isApplier ? LockerRentApplyStatus.Discard2 : LockerRentApplyStatus.Discard;
+                Status = LockerRentApplyStatus.Discard;
                 DiscardReason = reason;
+            }
+        }
+
+        /// <summary>
+        /// 设置取消
+        /// </summary>
+        /// <param name="reason">取消原因</param>
+        public void SetCancel(DateTime dateTime, string reason)
+        {
+            if (Status != LockerRentApplyStatus.Canceled && Status != LockerRentApplyStatus.Discard)
+            {
+                CancelTime = dateTime;
+                Status = LockerRentApplyStatus.Canceled;
+                CancelReason = reason;
             }
         }
 

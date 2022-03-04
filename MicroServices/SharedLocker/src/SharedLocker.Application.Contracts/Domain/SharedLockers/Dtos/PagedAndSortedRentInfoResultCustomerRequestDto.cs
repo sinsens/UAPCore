@@ -17,9 +17,14 @@ namespace SharedLocker.Domain.SharedLockers.Dtos
         public Guid? AppId { get; set; }
 
         /// <summary>
+        /// UserID
+        /// </summary>
+        public Guid? UserId { get; set; }
+
+        /// <summary>
         /// 状态
         /// </summary>
-        public LockerRentStatus[] Status { get; set; }
+        public LockerRentApplyStatus? Status { get; set; }
 
         /// <summary>
         /// 租用开始时间

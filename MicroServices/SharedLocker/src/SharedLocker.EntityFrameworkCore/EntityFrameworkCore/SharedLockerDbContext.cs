@@ -15,6 +15,7 @@ public class SharedLockerDbContext : UAPDbContextBase<SharedLockerDbContext>, IS
         public DbSet<Locker> Lockers { get; set; }
         public DbSet<LockerRent> LockerRents { get; set; }
         public DbSet<LockerRentInfo> LockerRentInfos { get; set; }
+        public DbSet<LockerRentApply> LockerRentApplies { get; set; }
 
     public SharedLockerDbContext(DbContextOptions<SharedLockerDbContext> options)
         : base(options)

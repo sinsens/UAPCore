@@ -14,7 +14,7 @@ namespace SharedLocker.Domain
     /// </summary>
     [Authorize]
     [Route("/api/shared-locker/rent")]
-    public class RentController : AbpController, ILockerRentAppService
+    public class RentController : SharedLockerController, ILockerRentAppService
     {
         private readonly ILockerRentAppService _lockerRentAppService;
         public RentController(ILockerRentAppService lockerRentAppService)

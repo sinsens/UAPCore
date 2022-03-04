@@ -15,27 +15,6 @@ public static class SharedLockerDbContextModelCreatingExtensions
     {
         Check.NotNull(builder, nameof(builder));
 
-        /* Configure all entities here. Example:
-
-        builder.Entity<Question>(b =>
-        {
-            //Configure table & schema name
-            b.ToTable(SharedLockerDbProperties.DbTablePrefix + "Questions", SharedLockerDbProperties.DbSchema);
-
-            b.ConfigureByConvention();
-
-            //Properties
-            b.Property(q => q.Title).IsRequired().HasMaxLength(QuestionConsts.MaxTitleLength);
-
-            //Relations
-            b.HasMany(question => question.Tags).WithOne().HasForeignKey(qt => qt.QuestionId);
-
-            //Indexes
-            b.HasIndex(q => q.CreationTime);
-        });
-        */
-
-
         builder.Entity<Locker>(b =>
         {
             b.ToTable(SharedLockerDbProperties.DbTablePrefix + "Lockers", SharedLockerDbProperties.DbSchema);
@@ -52,6 +31,7 @@ public static class SharedLockerDbContextModelCreatingExtensions
             b.HasIndex(x => x.Status);
             b.HasIndex(x => x.IsActive);
             b.HasIndex(x => x.AppId);
+            b.HasIndex(x => x.IsDeleted);
         });
 
         builder.Entity<LockerRent>(b =>
@@ -78,6 +58,8 @@ public static class SharedLockerDbContextModelCreatingExtensions
             b.HasIndex(x => x.AppId);
             b.HasIndex(x => x.RentTime);
             b.HasIndex(x => x.ReturnTime);
+
+            b.HasIndex(x => x.IsDeleted);
         });
 
         builder.Entity<LockerRentLog>(b =>
@@ -105,15 +87,24 @@ public static class SharedLockerDbContextModelCreatingExtensions
             b.ToTable(SharedLockerDbProperties.DbTablePrefix + "LockerRentApplies", SharedLockerDbProperties.DbSchema);
             b.ConfigureByConvention();
 
-            b.Property(x => x.Name).HasMaxLength(LockerRentApplyConst.MaxLockerRentApplyNameLength);
-            b.Property(x => x.Phone).HasMaxLength(LockerRentApplyConst.MaxLockerRentApplyPhoneLength);
-            b.Property(x => x.PinyinName).HasMaxLength(LockerRentApplyConst.MaxLockerRentApplyPinyinNameLength);
-            b.Property(x => x.FullPinyinName).HasMaxLength(LockerRentApplyConst.MaxLockerRentApplyFullPinyinNameLength);
-            b.Property(x => x.Auditor).HasMaxLength(LockerRentApplyConst.MaxLockerRentApplyNameLength);
-            b.Property(x => x.AuditRemark).HasMaxLength(LockerRentApplyConst.MaxLockerRentApplyRemarkLength);
+            b.Property(x => x.Name).HasMaxLength(LockerRentApplyConst.MaxNameLength);
+            b.Property(x => x.Phone).HasMaxLength(LockerRentApplyConst.MaxPhoneLength);
+            b.Property(x => x.PinyinName).HasMaxLength(LockerRentApplyConst.MaxPinyinNameLength);
+            b.Property(x => x.FullPinyinName).HasMaxLength(LockerRentApplyConst.MaxFullPinyinNameLength);
+            b.Property(x => x.Auditor).HasMaxLength(LockerRentApplyConst.MaxNameLength);
+            b.Property(x => x.AuditRemark).HasMaxLength(LockerRentApplyConst.MaxRemarkLength);
+            b.Property(x => x.DiscardReason).HasMaxLength(LockerRentApplyConst.MaxDiscardReasonLength);
+            b.Property(x => x.CancelReason).HasMaxLength(LockerRentApplyConst.MaxCancelReasonLength);
 
             b.HasOne(x => x.LockerRent);
 
+            b.HasIndex(x => x.Name);
+            b.HasIndex(x => x.PinyinName);
+            b.HasIndex(x => x.Phone);
+            b.HasIndex(x => x.Status);
+            b.HasIndex(x => x.AppId);
+            b.HasIndex(x => x.RentTime);
+            b.HasIndex(x => x.IsDeleted);
         });
     }
 }

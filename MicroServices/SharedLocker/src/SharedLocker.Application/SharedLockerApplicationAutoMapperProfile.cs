@@ -36,5 +36,8 @@ public class SharedLockerApplicationAutoMapperProfile : Profile
 
         CreateMap<Locker, LockerRentLockerDto>();
         CreateMap<LockerRentLog, LockerRentLogDto>();
+
+        CreateMap<LockerRentApply, LockerRentApplyDto>()
+            .ForMember(x => x.StatusDesc, e => e.MapFrom(s => s.Status.GetEnumDescription()));
     }
 }
