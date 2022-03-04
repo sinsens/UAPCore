@@ -12,7 +12,7 @@ namespace SharedLocker.Domain
     /// <summary>
     /// 租用申请管理
     /// </summary>
-    //[Authorize]
+    [Authorize]
     [RemoteService]
     [Route("/api/shared-locker/rent-apply")]
     public class RentApplyController: SharedLockerController, IRentApplyAppService
