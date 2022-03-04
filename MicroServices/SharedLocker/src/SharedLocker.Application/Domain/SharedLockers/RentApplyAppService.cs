@@ -12,7 +12,7 @@ using Volo.Abp.Domain.Repositories;
 
 namespace SharedLocker.Domain.SharedLockers
 {
-    //[Authorize]
+    [Authorize]
     public class RentApplyAppService : SharedLockerAppService, IRentApplyAppService
     {
         private readonly LockerRentApplyManager _applyManager;
@@ -28,9 +28,12 @@ namespace SharedLocker.Domain.SharedLockers
             await _applyManager.DiscardAsync(id, input.Reason);
         }
 
-        public ValueTask<LockerRentApplyDto> ApplyAsync(CreateLockerRentApplyDto input)
+        public async ValueTask<LockerRentApplyDto> ApplyAsync(CreateLockerRentApplyDto input)
         {
-            throw new NotImplementedException();
+            var rentApply = await _applyManager.RentApplyAsync(input.AppId, input.Name, input.Phone, input.Remark, input.ApplyCount, input.RentTime);
+            await CurrentUnitOfWork.SaveChangesAsync();
+
+            return ObjectMapper.Map<LockerRentApply, LockerRentApplyDto>(rentApply);
         }
 
         public async ValueTask AuditAsync(Guid id, AuditRentApplyDto input)
