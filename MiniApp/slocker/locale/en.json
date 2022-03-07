@@ -1,4 +1,6 @@
 {
+	"login.login": "Authorize and login",
+	"saved": "Saved",
 	"locale.auto": "System",
 	"locale.en": "English",
 	"locale.zh-hans": "简体中文",

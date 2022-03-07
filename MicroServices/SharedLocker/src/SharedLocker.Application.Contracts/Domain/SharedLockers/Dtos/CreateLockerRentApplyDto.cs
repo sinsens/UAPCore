@@ -9,48 +9,41 @@ namespace SharedLocker.Domain.SharedLockers.Dtos
     public class CreateLockerRentApplyDto
     {
         /// <summary>
-        /// ×âÓÃÈË
+        /// ç§Ÿç”¨äºº
         /// </summary>
-        [DisplayName("ĞÕÃû")]
-        [Required(ErrorMessage = "{0}ÊÇ±ØÌîÏî")]
-        [StringLength(LockerRentConst.MaxLockerRentNameLength, ErrorMessage = "{0}²»ÄÜ³¬¹ı{1}¸ö×Ö·û³¤¶È")]
+        [DisplayName("å§“å")]
+        [Required(ErrorMessage = "{0}æ˜¯å¿…å¡«é¡¹")]
+        [StringLength(LockerRentConst.MaxLockerRentNameLength, ErrorMessage = "{0}ä¸èƒ½è¶…è¿‡{1}ä¸ªå­—ç¬¦é•¿åº¦")]
         public string Name { get; set; }
 
         /// <summary>
-        /// ÁªÏµµç»°
+        /// è”ç³»ç”µè¯
         /// </summary>
-        [DisplayName("ÁªÏµµç»°")]
-        [Required(ErrorMessage = "{0}ÊÇ±ØÌîÏî")]
-        [StringLength(LockerRentConst.MaxLockerRentPhoneLength, ErrorMessage = "{0}²»ÄÜ³¬¹ı{1}¸ö×Ö·û³¤¶È")]
+        [DisplayName("è”ç³»ç”µè¯")]
+        [Required(ErrorMessage = "{0}æ˜¯å¿…å¡«é¡¹")]
+        [StringLength(LockerRentConst.MaxLockerRentPhoneLength, ErrorMessage = "{0}ä¸èƒ½è¶…è¿‡{1}ä¸ªå­—ç¬¦é•¿åº¦")]
         public string Phone { get; set; }
 
         /// <summary>
-        /// Æğ×âÊ±¼ä
+        /// èµ·ç§Ÿæ—¶é—´
         /// </summary>
-        [DisplayName("Æğ×âÊ±¼ä")]
-        [Required(ErrorMessage = "{0}ÊÇ±ØÌîÏî")]
-        public DateTime? RentTime { get; set; }
+        [DisplayName("èµ·ç§Ÿæ—¶é—´")]
+        [Required(ErrorMessage = "{0}æ˜¯å¿…å¡«é¡¹")]
+        public DateTime RentTime { get; set; }
 
         /// <summary>
-        /// ±¸×¢
+        /// å¤‡æ³¨
         /// </summary>
-        [DisplayName("±¸×¢")]
-        [StringLength(LockerRentConst.MaxLockerRentRemarkLength, ErrorMessage = "{0}²»ÄÜ³¬¹ı{1}¸ö×Ö·û³¤¶È")]
+        [DisplayName("å¤‡æ³¨")]
+        [StringLength(LockerRentConst.MaxLockerRentRemarkLength, ErrorMessage = "{0}ä¸èƒ½è¶…è¿‡{1}ä¸ªå­—ç¬¦é•¿åº¦")]
         public string Remark { get; set; }
 
         /// <summary>
-        /// ¹ØÁªÓ¦ÓÃ
+        /// ç”³è¯·æ•°é‡
         /// </summary>
-        [DisplayName("¹ØÁªÓ¦ÓÃ")]
-        [Required(ErrorMessage = "{0}ÊÇ±ØÌîÏî")]
-        public Guid? AppId { get; set; }
-
-        /// <summary>
-        /// ÉêÇëÊıÁ¿
-        /// </summary>
-        [DisplayName("ÉêÇëÊıÁ¿")]
-        [Required(ErrorMessage = "{0}ÊÇ±ØÌîÏî")]
-        [Range(1, 99, ErrorMessage = "{0}µÄ·¶Î§Ó¦ÔÚ{1}-{2}Ö®¼ä")]
+        [DisplayName("ç”³è¯·æ•°é‡")]
+        [Required(ErrorMessage = "{0}æ˜¯å¿…å¡«é¡¹")]
+        [Range(1, 99, ErrorMessage = "{0}çš„èŒƒå›´åº”åœ¨{1}-{2}ä¹‹é—´")]
         public int ApplyCount { get; set; }
     }
 }

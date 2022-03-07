@@ -50,7 +50,5 @@ export function updateNameAndPhone(options = {
 	phoneIsConfirm: false
 }) {
 	console.log('options', options)
-	return put(`/api/wechat-management/mini-programs/user-info/updateNameAndPhone/${options.id}`, options).then(res => {
-		console.log('更新成功')
-	})
+	return put(`/api/wechat-management/mini-programs/user-info/updateNameAndPhone/${options.id}`, options)
 }

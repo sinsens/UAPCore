@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view class="container">
 		<button @click="login()">点击授权登录</button>
 	</view>
 </template>
@@ -30,5 +30,9 @@
 </script>
 
 <style>
-
+	.container {
+		width: 100%;
+		margin-top: 50%;
+		padding: 0;
+	}
 </style>

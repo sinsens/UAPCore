@@ -72,7 +72,7 @@ namespace SharedLocker.Domain
         }
 
         /// <summary>
-        /// 过去
+        /// 获取
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -80,6 +80,17 @@ namespace SharedLocker.Domain
         public ValueTask<LockerRentApplyDto> GetAsync(Guid id)
         {
             return _applyAppService.GetAsync(id);
+        }
+		
+		/// <summary>
+        /// 获取最新待审核记录
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("last")]
+        public ValueTask<LockerRentApplyDto> GetLastAsync()
+        {
+            return _applyAppService.GetLastAsync();
         }
 
         /// <summary>

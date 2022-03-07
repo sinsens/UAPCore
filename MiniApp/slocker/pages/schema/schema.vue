@@ -1,48 +1,45 @@
 <template>
-  <view class="container">
-    <view>{{$t('schema.name')}}</view>
-    <input class="input" v-model="name" />
-    <button type="primary" @click="add">{{$t('schema.add')}}</button>
-  </view>
+	<view class="container">
+		<no-data v-if="list.length == 0"></no-data>
+		<uni-card v-else>
+			<uni-list v-for="item in list" :key="item.id">
+				<uni-list-item :title="$t('rent.process.name')" :note="item.name"></uni-list-item>
+				<uni-list-item :title="$t('rent.process.rentTime')" :note="item.rentTime | formatDatetime">
+				</uni-list-item>
+				<uni-list-item :title="$t('rent.process.creationTime')" :note="item.creationTime | formatDatetime">
+				</uni-list-item>
+				<uni-list-item :title="$t('rent.process.statusDesc')" :note="item.statusDesc"></uni-list-item>
+			</uni-list>
+		</uni-card>
+	</view>
 </template>
 
 <script>
-  const collection = "hello";
-  export default {
-    data() {
-      return {
-        name: ""
-      }
-    },
-    methods: {
-      add() {
-        uni.showLoading();
-        let db = uniCloud.database()
-        db.collection(collection).add({
-          name: this.name
-        }).then((res) => {
-          uni.showToast({
-            title: this.$t('schema.add-success')
-          })
-        }).catch((err) => {
-          uni.showModal({
-            content: err.message,
-            showCancel: false
-          })
-        }).finally(() => {
-          uni.hideLoading();
-        })
-      }
-    }
-  }
+	import {
+		getList
+	} from '@/api/apply.js'
+	export default {
+		data() {
+			return {
+				list: [],
+				title: this.$t('')
+			}
+		},
+		onShow() {
+			this.getList()
+		},
+		methods: {
+			getList() {
+				getList({
+					page: 1,
+				}).then(res => {
+					this.list = res.items
+				})
+			}
+		}
+	}
 </script>
 
 <style>
-  .input {
-    border: 1px solid #ebebeb;
-    border-radius: 3px;
-    margin-top: 15px;
-    margin-bottom: 15px;
-    padding: 8px;
-  }
+
 </style>

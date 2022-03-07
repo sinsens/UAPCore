@@ -30,7 +30,7 @@ namespace SharedLocker.Domain.SharedLockers
 
         public async ValueTask<LockerRentApplyDto> ApplyAsync(CreateLockerRentApplyDto input)
         {
-            var rentApply = await _applyManager.RentApplyAsync(input.AppId, input.Name, input.Phone, input.Remark, input.ApplyCount, input.RentTime);
+            var rentApply = await _applyManager.RentApplyAsync(input.Name, input.Phone, input.Remark, input.ApplyCount, input.RentTime);
             await CurrentUnitOfWork.SaveChangesAsync();
 
             return ObjectMapper.Map<LockerRentApply, LockerRentApplyDto>(rentApply);
@@ -51,6 +51,15 @@ namespace SharedLocker.Domain.SharedLockers
             var query = await _repository.GetQueryableAsync();
 
             var entity = await query.Include(x => x.LockerRent).FirstOrDefaultAsync(x=>x.Id == id);
+
+            return ObjectMapper.Map<LockerRentApply, LockerRentApplyDto>(entity);
+        }
+		
+		public async ValueTask<LockerRentApplyDto> GetLastAsync()
+        {
+            var query = await _repository.GetQueryableAsync();
+
+            var entity = await query.Include(x => x.LockerRent).FirstOrDefaultAsync(x => x.UserId == CurrentUser.Id && x.Status == Enums.LockerRentApplyStatus.PendingAudit);
 
             return ObjectMapper.Map<LockerRentApply, LockerRentApplyDto>(entity);
         }

@@ -50,13 +50,8 @@ function handleErrorResponse(res) {
 	const error = res.data.error || {}
 	switch (res.statusCode) {
 		case 401:
-			uni.showToast({
-				icon: 'none',
-				duration: 3000,
-				title: `登录过期，请重新登录！`
-			});
-			uni.reLaunch({
-				url: '/pages/login/login'
+			uni.showModal({
+				content: `未授权或登录过期，请重新登录！`
 			})
 			break
 
@@ -116,7 +111,7 @@ function handleErrorResponse(res) {
 			content: error.details,
 			showCancel: false
 		})
-	} else {
+	} else if (error.message || error.details) {
 		uni.showToast({
 			duration: 3000,
 			title: error.message || error.details

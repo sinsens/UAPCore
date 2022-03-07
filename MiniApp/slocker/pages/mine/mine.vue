@@ -69,13 +69,23 @@
 			}
 		},
 		methods: {
+			lang(str) {
+				return this.$t(str)
+			},
 			saveProfile() {
 				const options = {
 					id: this.$store.state.userid,
 					name: this.name,
 					phone: this.phone
 				}
-				updateNameAndPhone(options)
+				const that = this
+				updateNameAndPhone(options).then(res => {
+					console.log(that.lang('saved'))
+					uni.showToast({
+						title: that.lang('saved'),
+						icon: 'none'
+					})
+				})
 				this.$store.commit('setProfile', options)
 			},
 			onLocaleChange(e) {

@@ -1,6 +1,9 @@
 import App from './App'
 import messages from './locale/index'
 import store from './store'
+import {
+	formatDatetime
+} from 'utils/timehelper.js'
 
 let i18nConfig = {
 	locale: store.state.lang || uni.getLocale(),
@@ -39,3 +42,7 @@ export function createApp() {
 	}
 }
 // #endif
+
+Vue.filter('formatDatetime', function(val) {
+	return formatDatetime(val)
+})

@@ -1,1 +1,0 @@
-<view class="container"><view>{{$root.m0}}</view><input data-event-opts="{{[['input',[['__set_model',['','name','$event',[]]]]]]}}" class="input" value="{{name}}" bindinput="__e"/><button type="primary" data-event-opts="{{[['tap',[['add',['$event']]]]]}}" bindtap="__e">{{$root.m1}}</button></view>

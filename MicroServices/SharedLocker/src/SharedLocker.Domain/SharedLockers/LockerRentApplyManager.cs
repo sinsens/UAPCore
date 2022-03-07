@@ -64,7 +64,6 @@ namespace SharedLocker.SharedLockers
         /// <summary>
         /// 租用申请
         /// </summary>
-        /// <param name="appId">App Id</param>
         /// <param name="name">租用人</param>
         /// <param name="phone">手机号码</param>
         /// <param name="remark">备注信息</param>
@@ -72,9 +71,9 @@ namespace SharedLocker.SharedLockers
         /// <param name="rentTime">租用时间</param>
         /// <returns></returns>
         /// <exception cref="UserFriendlyException"></exception>
-        public async ValueTask<LockerRentApply> RentApplyAsync(Guid? appId, string name, string phone, string remark, int count, DateTime rentTime)
+        public async ValueTask<LockerRentApply> RentApplyAsync(string name, string phone, string remark, int count, DateTime rentTime)
         {
-            appId = appId ?? _currentApp.AppId;
+            var appId = _currentApp.AppId;
 
             if (count < 1)
             {
@@ -86,6 +85,7 @@ namespace SharedLocker.SharedLockers
             await CheckCanApplyAsync(userid);
 
             var rentApply = new LockerRentApply(GuidGenerator.Create(), userid, CurrentTenant.Id, appId, name, phone);
+            rentApply.SetRentTime(rentTime);
 
             // 获取拼音
             var pinyinName = WordsHelper.GetFirstPinyin(name);

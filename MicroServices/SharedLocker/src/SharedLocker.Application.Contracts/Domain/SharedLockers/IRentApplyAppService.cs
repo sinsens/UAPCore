@@ -22,6 +22,13 @@ namespace SharedLocker.Domain.SharedLockers
         /// <param name="id"></param>
         /// <returns></returns>
         ValueTask<LockerRentApplyDto> GetAsync(Guid id);
+		
+		/// <summary>
+        /// 获取最新审核中记录
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+		ValueTask<LockerRentApplyDto> GetLastAsync();
 
         /// <summary>
         /// 审核申请

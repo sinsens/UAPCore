@@ -74,5 +74,10 @@ namespace SharedLocker.Domain.SharedLockers.Dtos
         /// 申请状态
         /// </summary>
         public string StatusDesc { get; set; }
+		
+		/// <summary>
+		/// 申请时间
+		/// </summary>
+		public DateTime CreationTime {get;set;}
     }
 }

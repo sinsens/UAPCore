@@ -19,7 +19,8 @@ namespace SharedLocker.SharedLockers
         /// <param name="appId">应用id</param>
         /// <param name="name">姓名</param>
         /// <param name="phone">联系电话</param>
-        public LockerRentApply(Guid id, Guid userId, Guid? tenantId, Guid? appId, string name, string phone):base(id)
+        /// <param name="rentTime">起租时间</param>
+        public LockerRentApply(Guid id, Guid userId, Guid? tenantId, Guid? appId, string name, string phone) : base(id)
         {
             UserId = userId;
             TenantId = tenantId;
@@ -108,6 +109,11 @@ namespace SharedLocker.SharedLockers
 
         #region 方法
 
+        public void SetRentTime(DateTime dateTime)
+        {
+            RentTime = dateTime;
+        }
+
         /// <summary>
         /// 设置状态
         /// </summary>
@@ -146,9 +152,9 @@ namespace SharedLocker.SharedLockers
         /// 设置作废
         /// </summary>
         /// <param name="reason">作废原因</param>
-        public void SetDiscard(DateTime dateTime,string reason)
+        public void SetDiscard(DateTime dateTime, string reason)
         {
-            if(Status != LockerRentApplyStatus.Canceled && Status != LockerRentApplyStatus.Discard)
+            if (Status != LockerRentApplyStatus.Canceled && Status != LockerRentApplyStatus.Discard)
             {
                 DiscardTime = dateTime;
                 Status = LockerRentApplyStatus.Discard;
