@@ -12,9 +12,9 @@ function service(options = {}) {
 	store.state.userid && (userid = store.state.userid)
 	store.state.tenantid && (tenantid = store.state.tenantid)
 
-	options.url = `${config.APP_BASE_API}${options.url}`
+	options.url = `${options.baseURL || config.APP_BASE_API}${options.url}`
 	options.header = {
-		'content-type': 'application/json',
+		'content-type': options['content-type'] ||'application/json',
 		'Authorization': `Bearer ${token}`,
 		'uap_appid': `${appid}`,
 		'__tenant': tenantid,
@@ -23,7 +23,8 @@ function service(options = {}) {
 
 	return new Promise((resolved, rejected) => {
 		options.success = (res) => {
-			if (Number(res.statusCode) == 200) { //请求成功
+			const statusCode = Number(res.statusCode)
+			if (statusCode <= 204) { //请求成功
 				resolved(res.data);
 			} else {
 				handleErrorResponse(res)
@@ -47,7 +48,7 @@ function service(options = {}) {
 function handleErrorResponse(res) {
 	console.log('==============handleErrorResponse==============')
 	console.log(res)
-	const error = res.data.error || {}
+	let error = res.data.error || {}
 	switch (res.statusCode) {
 		case 401:
 			uni.showModal({
@@ -56,6 +57,12 @@ function handleErrorResponse(res) {
 			break
 
 		case 400:
+			if (typeof(error) == 'string') {
+				const err = error
+				error = {}
+				error.message = err
+				break
+			}
 			error.message = error.message
 			error.details = error.details
 			break
@@ -114,6 +121,7 @@ function handleErrorResponse(res) {
 	} else if (error.message || error.details) {
 		uni.showToast({
 			duration: 3000,
+			icon: 'error',
 			title: error.message || error.details
 		})
 	}
@@ -156,6 +164,10 @@ export function put(url, data) {
 		method: "PUT",
 		data: data
 	})
+}
+
+export function request(options) {
+	return service(options)
 }
 
 export default service

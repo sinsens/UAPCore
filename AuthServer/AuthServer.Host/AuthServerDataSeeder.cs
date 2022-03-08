@@ -186,7 +186,7 @@ namespace AuthServer.Host
 			await CreateClientAsync(
                 name: "sharedlocker-app",
                 scopes: new[] { "InternalGateway", "BaseService", "BusinessService", "SharedLockerService" },
-                grantTypes: new[] { "client_credentials" },
+                grantTypes: new[] { "password" },
                 secret: "1q2w3e*".Sha256(),
                 permissions: new[] { IdentityPermissions.Users.Default, IdentityPermissions.UserLookup.Default }
             );

@@ -32,6 +32,24 @@ namespace UAP.Domain.Volo.Abp.Users
             }
         }
 
+        public override Guid? TenantId
+        {
+            get
+            {
+                var id = base.TenantId;
+                if(id == null)
+                {
+                    var request = _httpContextAccessor.HttpContext?.Request;
+                    var idString = request?.Headers[UAPConsts.TenantIdKey] ?? request?.Query[UAPConsts.TenantIdKey].FirstOrDefault();
+                    if (Guid.TryParse(idString, out Guid tenantid))
+                    {
+                        id = tenantid;
+                    }
+                }
+                return id;
+            }
+        }
+
         private readonly ICurrentPrincipalAccessor _principalAccessor;
         private readonly IHttpContextAccessor _httpContextAccessor;
 

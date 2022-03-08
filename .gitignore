@@ -334,3 +334,4 @@ ASALocalRun/
 .localhistory/
 node_modules/
 AuthServer/AuthServer.Host/Logs/logs.txt
+unpackage/

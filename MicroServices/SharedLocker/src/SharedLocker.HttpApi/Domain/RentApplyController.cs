@@ -76,7 +76,7 @@ namespace SharedLocker.Domain
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpGet("{id}")]
+        [HttpGet("get/{id}")]
         public ValueTask<LockerRentApplyDto> GetAsync(Guid id)
         {
             return _applyAppService.GetAsync(id);
@@ -99,9 +99,31 @@ namespace SharedLocker.Domain
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpGet("getlist")]
-        public ValueTask<PagedResultDto<LockerRentApplyDto>> GetListAsync(PagedAndSortedRentInfoResultCustomerRequestDto input)
+        public ValueTask<PagedResultDto<LockerRentApplyDto>> GetListAsync(PagedAndSortedRentApplyRequestDto input)
         {
             return _applyAppService.GetListAsync(input);
+        }
+
+        /// <summary>
+        /// 分页查询
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        [HttpGet("getmylist")]
+        public ValueTask<PagedResultDto<LockerRentApplyDto>> GetMyListAsync(PagedAndSortedRentApplyCustomerRequestDto input)
+        {
+            return _applyAppService.GetMyListAsync(input);
+        }
+
+        /// <summary>
+        /// 分页查询服务中申请
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        [HttpGet("getprocesslist")]
+        public ValueTask<PagedResultDto<LockerRentApplyDto>> GetProcessListAsync(PagedAndSortedRentApplyCustomerRequestDto input)
+        {
+            return _applyAppService.GetProcessListAsync(input);
         }
     }
 }

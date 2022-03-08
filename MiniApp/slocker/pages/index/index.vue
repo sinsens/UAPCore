@@ -24,7 +24,6 @@
 					</uni-forms-item>
 				</uni-forms>
 				<button type="primary" @click="submit">{{$t('rent.submit')}}</button>
-				<button type="warn" @click="cancel">{{$t('rent.cancel')}}</button>
 			</view>
 		</uni-card>
 		<!--进度表-->
@@ -37,6 +36,9 @@
 				</uni-list-item>
 				<uni-list-item :title="$t('rent.process.statusDesc')" :note="lastApply.statusDesc"></uni-list-item>
 			</uni-list>
+			<slot name="footer">
+				<button type="warn" @click="cancel">{{$t('rent.cancel')}}</button>
+			</slot>
 		</uni-card>
 	</view>
 </template>
@@ -49,6 +51,7 @@
 	import store from '@/store/index.js'
 	import {
 		apply,
+		cancel,
 		getLast,
 		getList
 	} from '@/api/apply.js'
@@ -100,25 +103,24 @@
 				}
 			}
 		},
-		computed: {
-
-		},
-		onLoad() {
-
-		},
 		onShow() {
-			this.updateStatus()
+			if (this.$store.state.token == '') {
+				uni.reLaunch({
+					url: '/pages/login/login'
+				})
+			} else {
+				this.updateStatus()
+			}
 		},
 		methods: {
-			getList() {
-
-			},
 			updateStatus() {
 				getLast().then(res => {
 					console.log('2333')
 					console.log(res)
 					this.lastApply = res
 					this.onprocess = res && res.status === 0
+				}).catch(err => {
+					this.onprocess = false
 				})
 			},
 			submit() {
@@ -138,10 +140,37 @@
 				})
 			},
 			doSubmit() {
-				console.log()
+				const that = this
 				this.form['rentTime'] = toDatetime(this.form['time'])
 				apply(this.form).then((response) => {
-					console.log(response)
+					if (response && response.status == 0) {
+						uni.showToast({
+							title: that.$t('rent.form.submit-ok')
+						})
+						that.updateStatus()
+					}
+				})
+			},
+			cancel() {
+				const that = this
+				const {
+					id
+				} = this.lastApply
+
+				if (!id) return
+
+				uni.showModal({
+					content: this.$t('rent.process.confirm-cancel'),
+					success(res) {
+						if (res.confirm) {
+							cancel(id).then(() => {
+								uni.showToast({
+									title: that.$t('rent.process.cancel-done')
+								})
+								that.updateStatus()
+							})
+						}
+					}
 				})
 			}
 		}

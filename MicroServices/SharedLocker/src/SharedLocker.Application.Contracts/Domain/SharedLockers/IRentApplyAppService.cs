@@ -59,6 +59,20 @@ namespace SharedLocker.Domain.SharedLockers
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        ValueTask<PagedResultDto<LockerRentApplyDto>> GetListAsync(PagedAndSortedRentInfoResultCustomerRequestDto input);
+        ValueTask<PagedResultDto<LockerRentApplyDto>> GetListAsync(PagedAndSortedRentApplyRequestDto input);
+
+        /// <summary>
+        /// 分页查询申请列表
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        ValueTask<PagedResultDto<LockerRentApplyDto>> GetMyListAsync(PagedAndSortedRentApplyCustomerRequestDto input);
+
+        /// <summary>
+        /// 分页查询服务中列表
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        ValueTask<PagedResultDto<LockerRentApplyDto>> GetProcessListAsync(PagedAndSortedRentApplyCustomerRequestDto input);
     }
 }

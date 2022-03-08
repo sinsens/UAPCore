@@ -1,14 +1,12 @@
 <template>
 	<view class="container">
 		<no-data v-if="list.length == 0"></no-data>
-		<uni-card v-else>
-			<uni-list v-for="item in list" :key="item.id">
+		<uni-card v-else v-for="item in list" :key="item.id" :title="item.creationTime | formatDatetime"
+			:extra="item.statusDesc">
+			<uni-list>
 				<uni-list-item :title="$t('rent.process.name')" :note="item.name"></uni-list-item>
 				<uni-list-item :title="$t('rent.process.rentTime')" :note="item.rentTime | formatDatetime">
 				</uni-list-item>
-				<uni-list-item :title="$t('rent.process.creationTime')" :note="item.creationTime | formatDatetime">
-				</uni-list-item>
-				<uni-list-item :title="$t('rent.process.statusDesc')" :note="item.statusDesc"></uni-list-item>
 			</uni-list>
 		</uni-card>
 	</view>
@@ -16,7 +14,8 @@
 
 <script>
 	import {
-		getList
+		getMyList,
+		getMyProcessList
 	} from '@/api/apply.js'
 	export default {
 		data() {
@@ -30,7 +29,7 @@
 		},
 		methods: {
 			getList() {
-				getList({
+				getMyProcessList({
 					page: 1,
 					status: 2
 				}).then(res => {

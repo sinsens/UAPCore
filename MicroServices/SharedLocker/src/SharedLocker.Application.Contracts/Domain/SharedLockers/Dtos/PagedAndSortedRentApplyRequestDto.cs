@@ -4,7 +4,7 @@ using Volo.Abp.Application.Dtos;
 
 namespace SharedLocker.Domain.SharedLockers.Dtos
 {
-    public class PagedAndSortedRentInfoResultCustomerRequestDto : PagedAndSortedResultRequestDto
+    public class PagedAndSortedRentApplyRequestDto : PagedAndSortedResultRequestDto
     {
         /// <summary>
         /// 关键词

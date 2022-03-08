@@ -33,7 +33,46 @@ export function getLast() {
  */
 export function getList(param = {
 	page: 1,
-	status: ''
+	status: '',
+	skipCount: 0
 }) {
-	return get(`/api/shared-locker/rent-apply/getlist?page=${param.page}&status=${param.status}`)
+	return get(
+		`/api/shared-locker/rent-apply/getlist?page=${param.page}&status=${param.status}&skipCount=${param.skipCount || 0}`
+		)
+}
+
+/**
+ * 分页查询
+ */
+export function getMyList(param = {
+	page: 1,
+	status: '',
+	skipCount: 0
+}) {
+	return get(
+		`/api/shared-locker/rent-apply/getmylist?page=${param.page || 1}&status=${param.status || ''}&skipCount=${param.skipCount || 0}`
+	)
+}
+
+/**
+ * 分页查询
+ */
+export function getMyProcessList(param = {
+	page: 1,
+	status: '',
+	skipCount: 0
+}) {
+	return get(
+		`/api/shared-locker/rent-apply/getprocesslist?page=${param.page || 1}&status=${param.status || ''}&skipCount=${param.skipCount || 0}`
+	)
+}
+
+/**
+ * 取消
+ * @param {Object} id
+ */
+export function cancel(id, param = {
+	reason: ''
+}) {
+	return put(`/api/shared-locker/rent-apply/cancel/${id}`, param)
 }

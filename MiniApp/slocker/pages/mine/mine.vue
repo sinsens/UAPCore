@@ -16,9 +16,8 @@
 			<view class="locale-item">
 				<label class="uni-label">{{$t('mine.phone')}}</label><input v-model="phone" />
 			</view>
-			<view class="locale-item">
-				<button class="uni-button" @click="saveProfile()">{{$t('mine.savebtn')}}</button>
-			</view>
+			<button type="primary" @click="saveProfile()">{{$t('mine.savebtn')}}</button>
+			<button type="default" @click="logout()">{{$t('mine.loginOutBtn')}}</button>
 		</view>
 	</view>
 </template>
@@ -69,8 +68,19 @@
 			}
 		},
 		methods: {
-			lang(str) {
-				return this.$t(str)
+			logout() {
+				const that = this
+				uni.showModal({
+					content: this.$t('mine.loginOutConfirm'),
+					success(c) {
+						if (c.confirm) {
+							that.$store.commit('logout')
+							uni.reLaunch({
+								url: '/pages/index/index'
+							})
+						}
+					}
+				})
 			},
 			saveProfile() {
 				const options = {
@@ -80,10 +90,9 @@
 				}
 				const that = this
 				updateNameAndPhone(options).then(res => {
-					console.log(that.lang('saved'))
+					console.log(that.$t('saved'))
 					uni.showToast({
-						title: that.lang('saved'),
-						icon: 'none'
+						title: that.$t('saved'),
 					})
 				})
 				this.$store.commit('setProfile', options)

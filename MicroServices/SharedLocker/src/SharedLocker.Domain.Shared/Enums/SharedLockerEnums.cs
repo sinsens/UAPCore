@@ -81,7 +81,7 @@ namespace SharedLocker.Enums
         Canceled = 10,
 
         /// <summary>
-        /// 申请人作废
+        /// 已作废
         /// </summary>
 		[Description("已作废")]
         Discard = 11,

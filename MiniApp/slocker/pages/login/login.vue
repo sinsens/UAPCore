@@ -1,6 +1,8 @@
 <template>
 	<view class="container">
-		<button @click="login()">点击授权登录</button>
+		<view class=".btn-area">
+			<button type="primary" @click="login()">点击授权登录</button>
+		</view>
 	</view>
 </template>
 
@@ -31,8 +33,13 @@
 
 <style>
 	.container {
-		width: 100%;
-		margin-top: 50%;
-		padding: 0;
+		padding: 20rpx;
+	}
+
+	.container .btn-area {
+		position: fixed;
+		bottom: 100rpx;
+		left: 20rpx;
+		right: 20rpx;
 	}
 </style>

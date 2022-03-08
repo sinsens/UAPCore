@@ -27,12 +27,16 @@ const store = new Vuex.Store({
 		tenantid: uni.getStorageSync(`${key}_tenantid`),
 		appid: uni.getStorageSync(`${key}_appid`),
 		token: uni.getStorageSync(`${key}_token`),
-		hasLogin: uni.getStorageSync(`${key}_haslogin`),
+		hasLogin: uni.getStorageSync(`${key}_haslogin`) || false,
 		name: uni.getStorageSync(`${key}_name`),
 		phone: uni.getStorageSync(`${key}_phone`),
-		lang: uni.getStorageSync(`${key}_lang`) || 'zh-Hans'
+		lang: uni.getStorageSync(`${key}_lang`) || 'zh-Hans',
 	},
 	mutations: {
+		setName(state, name) {
+			state.name = name
+			uni.setStorageSync(`${key}_name`, name)
+		},
 		setUserId(state, userid) {
 			state.userid = userid
 			uni.setStorageSync(`${key}_userid`, userid)
@@ -60,6 +64,9 @@ const store = new Vuex.Store({
 		setLang(state, lang) {
 			state.lang = lang
 			uni.setStorageSync(`${key}_lang`, lang)
+		},
+		logout(state) {
+			uni.clearStorageSync()
 		}
 	}
 })

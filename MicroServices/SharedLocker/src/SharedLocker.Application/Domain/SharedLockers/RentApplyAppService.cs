@@ -50,12 +50,12 @@ namespace SharedLocker.Domain.SharedLockers
         {
             var query = await _repository.GetQueryableAsync();
 
-            var entity = await query.Include(x => x.LockerRent).FirstOrDefaultAsync(x=>x.Id == id);
+            var entity = await query.Include(x => x.LockerRent).FirstOrDefaultAsync(x => x.Id == id);
 
             return ObjectMapper.Map<LockerRentApply, LockerRentApplyDto>(entity);
         }
-		
-		public async ValueTask<LockerRentApplyDto> GetLastAsync()
+
+        public async ValueTask<LockerRentApplyDto> GetLastAsync()
         {
             var query = await _repository.GetQueryableAsync();
 
@@ -64,7 +64,7 @@ namespace SharedLocker.Domain.SharedLockers
             return ObjectMapper.Map<LockerRentApply, LockerRentApplyDto>(entity);
         }
 
-        public async ValueTask<PagedResultDto<LockerRentApplyDto>> GetListAsync(PagedAndSortedRentInfoResultCustomerRequestDto input)
+        public async ValueTask<PagedResultDto<LockerRentApplyDto>> GetListAsync(PagedAndSortedRentApplyRequestDto input)
         {
             var appId = currentApp.AppId ?? input.AppId;
 
@@ -73,6 +73,63 @@ namespace SharedLocker.Domain.SharedLockers
             var query = await _repository.GetQueryableAsync();
 
             query = query.WhereIf(input.UserId.HasValue, x => x.UserId == input.UserId)
+                .WhereIf(input.Status.HasValue, x => x.Status == input.Status)
+                .WhereIf(input.StartTime.HasValue, x => x.RentTime >= input.StartTime)
+                .WhereIf(input.EndTime.HasValue, x => x.RentTime <= input.EndTime)
+                .WhereIf(!input.Filter.IsNullOrWhiteSpace(), x =>
+                    EF.Functions.Like(x.Name, likeFilter) || EF.Functions.Like(x.PinyinName, likeFilter) ||
+                    EF.Functions.Like(x.FullPinyinName, likeFilter) || EF.Functions.Like(x.Phone, likeFilter)
+                );
+
+            var count = await query.CountAsync();
+            var list = await query.OrderByDescending(x => x.Id).PageBy(input).ToListAsync();
+
+            return new PagedResultDto<LockerRentApplyDto>
+            {
+                TotalCount = count,
+                Items = ObjectMapper.Map<IReadOnlyList<LockerRentApply>, IReadOnlyList<LockerRentApplyDto>>(list)
+            };
+        }
+
+        public async ValueTask<PagedResultDto<LockerRentApplyDto>> GetMyListAsync(PagedAndSortedRentApplyCustomerRequestDto input)
+        {
+            var appId = currentApp.AppId ?? input.AppId;
+
+            var likeFilter = $"%{input.Filter}%";
+
+            var query = await _repository.GetQueryableAsync();
+
+            query = query
+                .Where(x => x.UserId == CurrentUser.Id)
+                .WhereIf(input.Status.HasValue, x => x.Status == input.Status)
+                .WhereIf(input.StartTime.HasValue, x => x.RentTime >= input.StartTime)
+                .WhereIf(input.EndTime.HasValue, x => x.RentTime <= input.EndTime)
+                .WhereIf(!input.Filter.IsNullOrWhiteSpace(), x =>
+                    EF.Functions.Like(x.Name, likeFilter) || EF.Functions.Like(x.PinyinName, likeFilter) ||
+                    EF.Functions.Like(x.FullPinyinName, likeFilter) || EF.Functions.Like(x.Phone, likeFilter)
+                );
+
+            var count = await query.CountAsync();
+            var list = await query.OrderByDescending(x => x.Id).PageBy(input).ToListAsync();
+
+            return new PagedResultDto<LockerRentApplyDto>
+            {
+                TotalCount = count,
+                Items = ObjectMapper.Map<IReadOnlyList<LockerRentApply>, IReadOnlyList<LockerRentApplyDto>>(list)
+            };
+        }
+
+        public async ValueTask<PagedResultDto<LockerRentApplyDto>> GetProcessListAsync(PagedAndSortedRentApplyCustomerRequestDto input)
+        {
+            var appId = currentApp.AppId ?? input.AppId;
+
+            var likeFilter = $"%{input.Filter}%";
+
+            var query = await _repository.GetQueryableAsync();
+
+            query = query.Include(x => x.LockerRent)
+                .Where(x => x.UserId == CurrentUser.Id)
+                .Where(x => x.LockerRent.Status == Enums.LockerRentStatus.InService)
                 .WhereIf(input.Status.HasValue, x => x.Status == input.Status)
                 .WhereIf(input.StartTime.HasValue, x => x.RentTime >= input.StartTime)
                 .WhereIf(input.EndTime.HasValue, x => x.RentTime <= input.EndTime)

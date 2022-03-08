@@ -390,10 +390,10 @@ namespace EasyAbp.WeChatManagement.MiniPrograms.Login
                 ClientId = "uni-app",
                 ClientSecret = _configuration["IdentityClients:Default:ClientSecret"],
                 Parameters = {
-                    {"appid", appId},
-                    {"unionid", unionId},
-                    {"openid", openId},
-                }
+                    {"appid", appId },
+                    {"unionid", unionId },
+                    {"openid", openId }
+                },
             };
 
             request.Headers.Add(GetTenantHeaderName(), CurrentTenant.Id?.ToString());

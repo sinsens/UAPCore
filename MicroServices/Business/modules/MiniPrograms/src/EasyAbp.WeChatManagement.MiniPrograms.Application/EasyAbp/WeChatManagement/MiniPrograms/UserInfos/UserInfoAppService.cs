@@ -12,7 +12,7 @@ using Volo.Abp.Users;
 
 namespace EasyAbp.WeChatManagement.MiniPrograms.UserInfos
 {
-	[Authorize]
+    [Authorize]
     public class UserInfoAppService : ReadOnlyAppService<UserInfo, UserInfoDto, Guid, PagedAndSortedResultRequestDto>,
         IUserInfoAppService
     {
@@ -21,7 +21,7 @@ namespace EasyAbp.WeChatManagement.MiniPrograms.UserInfos
 
         private readonly IUserInfoRepository _repository;
         private readonly IdentityUserManager _identityUserManager;
-        
+
         public UserInfoAppService(IUserInfoRepository repository, IdentityUserManager identityUserManager) : base(repository)
         {
             _repository = repository;
@@ -32,7 +32,7 @@ namespace EasyAbp.WeChatManagement.MiniPrograms.UserInfos
         public async Task<UserInfoDto> UpdateAsync(UserInfoModel input)
         {
             var userInfo = await _repository.FindAsync(x => x.UserId == CurrentUser.GetId());
-            
+
             userInfo.UpdateInfo(input);
 
             await _repository.UpdateAsync(userInfo, true);
@@ -43,24 +43,21 @@ namespace EasyAbp.WeChatManagement.MiniPrograms.UserInfos
         [Authorize]
         public async ValueTask UpdateAsync(Guid id, UpdateNameAndPhoneDto input)
         {
-            using (DataFilter.Disable<IMultiTenant>())
+            Console.WriteLine("================================");
+            Console.WriteLine($"Current-Tenant: {CurrentTenant.Id}");
+            Console.WriteLine($"Current-User: {CurrentUser.Id}");
+            var user = await _identityUserManager.GetByIdAsync(id);
+            if (user != null)
             {
-                Console.WriteLine("================================");
-                Console.WriteLine($"Current-Tenant: {CurrentTenant.Id}");
-				Console.WriteLine($"Current-User: {CurrentUser.Id}");
-                var user = await _identityUserManager.GetByIdAsync(id);
-                if (user != null)
+                if (!input.Name.IsNullOrWhiteSpace())
                 {
-                    if (!input.Name.IsNullOrWhiteSpace())
-                    {
-                        user.Name = input.Name;
-                    }
-                    if (!input.Phone.IsNullOrWhiteSpace())
-                    {
-                        user.SetPhoneNumber(input.Phone, input.PhoneIsConfirm);
-                    }
-                    await _identityUserManager.UpdateAsync(user);
+                    user.Name = input.Name;
                 }
+                if (!input.Phone.IsNullOrWhiteSpace())
+                {
+                    user.SetPhoneNumber(input.Phone, input.PhoneIsConfirm);
+                }
+                await _identityUserManager.UpdateAsync(user);
             }
         }
     }

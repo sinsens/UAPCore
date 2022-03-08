@@ -6,22 +6,10 @@
 				"navigationBarTitleText": "%index.title%"
 			}
 		}, {
-			"path": "pages/component/component",
+			"path": "pages/process/process",
 			"style": {
-				"navigationBarTitleText": "%index.component%",
-				"enablePullDownRefresh": false
-			}
-		}, {
-			"path": "pages/api/api",
-			"style": {
-				"navigationBarTitleText": "%index.api%",
-				"enablePullDownRefresh": false
-			}
-		}, {
-			"path": "pages/schema/schema",
-			"style": {
-				"navigationBarTitleText": "%index.schema%",
-				"enablePullDownRefresh": false
+				"navigationBarTitleText": "%index.process%",
+				"enablePullDownRefresh": true
 			}
 		}, {
 			"path": "pages/login/login",
@@ -30,9 +18,32 @@
 				"enablePullDownRefresh": false
 			}
 
+		}, {
+			"path": "pages/mine/mine",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/history/history",
+			"style": {
+				"navigationBarTitleText": "%index.history%",
+				"enablePullDownRefresh": true
+			}
+
 		}
 	    ,{
-            "path" : "pages/mine/mine",
+            "path" : "pages/login/admin",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/admin/index",
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "",
@@ -51,10 +62,10 @@
 				"text": "%index.rent%"
 			},
 			{
-				"pagePath": "pages/component/component",
+				"pagePath": "pages/process/process",
 				"text": "%index.return%"
 			}, {
-				"pagePath": "pages/api/api",
+				"pagePath": "pages/history/history",
 				"text": "%index.history%"
 			}, {
 				"pagePath": "pages/mine/mine",
