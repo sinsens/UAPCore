@@ -14,7 +14,7 @@ function service(options = {}) {
 
 	options.url = `${options.baseURL || config.APP_BASE_API}${options.url}`
 	options.header = {
-		'content-type': options['content-type'] ||'application/json',
+		'content-type': options['content-type'] || 'application/json',
 		'Authorization': `Bearer ${token}`,
 		'uap_appid': `${appid}`,
 		'__tenant': tenantid,
@@ -168,6 +168,33 @@ export function put(url, data) {
 
 export function request(options) {
 	return service(options)
+}
+
+export function getPageParams(params) {
+	console.log(params)
+	const options = {}
+	if (!typeof(params) == 'object') {
+		params = {}
+	}
+
+	options.page = params.page || 1
+	options.status = params.hasOwnProperty('status') ? params.status : ''
+	options.skipCount = params.skipCount || 0
+	options.maxResultCount = params.maxResultCount || 10
+
+	for (const key in params) {
+		if (!options.hasOwnProperty(key)) {
+			options[key] = params[key]
+		}
+	}
+
+	let urlpost = ''
+	for (const key in options) {
+		const value = typeof(options[key]) == 'object' ? JSON.parse(options[key]) : options[key]
+		urlpost += `${key}=${value}&`
+	}
+
+	return urlpost.substring(0, urlpost.length - 1)
 }
 
 export default service

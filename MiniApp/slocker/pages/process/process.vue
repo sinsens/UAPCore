@@ -4,8 +4,8 @@
 		<uni-card v-else v-for="item in list" :key="item.id" :title="item.creationTime | formatDatetime"
 			:extra="item.statusDesc">
 			<uni-list>
-				<uni-list-item :title="$t('rent.process.name')" :note="item.name"></uni-list-item>
-				<uni-list-item :title="$t('rent.process.rentTime')" :note="item.rentTime | formatDatetime">
+				<uni-list-item :title="$t('rent.process.name')" :rightText="item.name"></uni-list-item>
+				<uni-list-item :title="$t('rent.process.rentTime')" :rightText="item.rentTime | formatDatetime">
 				</uni-list-item>
 			</uni-list>
 		</uni-card>

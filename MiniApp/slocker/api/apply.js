@@ -1,21 +1,24 @@
-import config from '@/static/config.js'
-import store from '@/store/index.js'
+/**
+ * 申请相关API
+ */
 import {
 	post,
 	put,
-	get
+	get,
+	getPageParams
 } from '@/utils/request.js'
+
+
 
 /**
  * 提交申请
  */
 export function apply(param = {
-	name: '',
-	phone: '',
-	applyCount: 1,
-	rentTime: '',
-	remark: '',
-	appId: ''
+	name: '', // 姓名
+	phone: '', // 联系电话
+	applyCount: 1, // 申请数量
+	rentTime: '', // 起租时间
+	remark: '' // 备注
 }) {
 	return put(`/api/shared-locker/rent-apply/apply`, param)
 }
@@ -32,13 +35,12 @@ export function getLast() {
  * 分页查询
  */
 export function getList(param = {
-	page: 1,
-	status: '',
-	skipCount: 0
+
 }) {
+	const postfix = getPageParams(param)
 	return get(
-		`/api/shared-locker/rent-apply/getlist?page=${param.page}&status=${param.status}&skipCount=${param.skipCount || 0}`
-		)
+		`/api/shared-locker/rent-apply/getlist?${postfix}`
+	)
 }
 
 /**
@@ -49,8 +51,9 @@ export function getMyList(param = {
 	status: '',
 	skipCount: 0
 }) {
+	const postfix = getPageParams(param)
 	return get(
-		`/api/shared-locker/rent-apply/getmylist?page=${param.page || 1}&status=${param.status || ''}&skipCount=${param.skipCount || 0}`
+		`/api/shared-locker/rent-apply/getmylist?${postfix}`
 	)
 }
 
@@ -62,8 +65,9 @@ export function getMyProcessList(param = {
 	status: '',
 	skipCount: 0
 }) {
+	const postfix = getPageParams(param)
 	return get(
-		`/api/shared-locker/rent-apply/getprocesslist?page=${param.page || 1}&status=${param.status || ''}&skipCount=${param.skipCount || 0}`
+		`/api/shared-locker/rent-apply/getprocesslist?${postfix}`
 	)
 }
 
@@ -75,4 +79,34 @@ export function cancel(id, param = {
 	reason: ''
 }) {
 	return put(`/api/shared-locker/rent-apply/cancel/${id}`, param)
+}
+
+/**
+ * 审核
+ */
+export function audit(id, param = {
+	"result": true, // true:通过，false:不通过
+	"remark": "string", // 备注
+	"lockerIds": [ // 分配储物柜
+		"id"
+	]
+}) {
+	return put(`/api/shared-locker/rent-apply/audit/${id}`, param)
+}
+
+/**
+ * 作废
+ */
+export function discard(id, param = {
+	reason: '' // 作废原因
+}) {
+	return put(`/api/shared-locker/rent-apply/discard/${id}`, param)
+}
+
+/**
+ * 获取详情
+ * @param {Object} id
+ */
+export function detail(id) {
+	return get(`/api/shared-locker/rent-apply/get/${id}`)
 }

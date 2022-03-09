@@ -85,6 +85,7 @@ namespace SharedLocker.SharedLockers
             await CheckCanApplyAsync(userid);
 
             var rentApply = new LockerRentApply(GuidGenerator.Create(), userid, CurrentTenant.Id, appId, name, phone);
+			rentApply.SetApplyCount(count);
             rentApply.SetRentTime(rentTime);
 
             // 获取拼音

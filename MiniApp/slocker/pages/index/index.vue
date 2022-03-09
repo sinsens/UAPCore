@@ -23,18 +23,19 @@
 						<uni-easyinput type="textarea" maxlength="1000" v-model="form.remark"></uni-easyinput>
 					</uni-forms-item>
 				</uni-forms>
-				<button type="primary" @click="submit">{{$t('rent.submit')}}</button>
+				<button type="primary" @click="submit" :loading="onsubmit">{{$t('rent.submit')}}</button>
 			</view>
 		</uni-card>
 		<!--进度表-->
 		<uni-card v-else>
 			<uni-list>
-				<uni-list-item :title="$t('rent.process.name')" :note="lastApply.name"></uni-list-item>
-				<uni-list-item :title="$t('rent.process.rentTime')" :note="lastApply.rentTime | formatDatetime">
+				<uni-list-item :title="$t('rent.process.name')" :rightText="lastApply.name"></uni-list-item>
+				<uni-list-item :title="$t('rent.process.rentTime')" :rightText="lastApply.rentTime | formatDatetime">
 				</uni-list-item>
-				<uni-list-item :title="$t('rent.process.creationTime')" :note="lastApply.creationTime | formatDatetime">
+				<uni-list-item :title="$t('rent.process.creationTime')"
+					:rightText="lastApply.creationTime | formatDatetime">
 				</uni-list-item>
-				<uni-list-item :title="$t('rent.process.statusDesc')" :note="lastApply.statusDesc"></uni-list-item>
+				<uni-list-item :title="$t('rent.process.statusDesc')" :rightText="lastApply.statusDesc"></uni-list-item>
 			</uni-list>
 			<slot name="footer">
 				<button type="warn" @click="cancel">{{$t('rent.cancel')}}</button>
@@ -67,6 +68,7 @@
 		data() {
 			return {
 				page: 1,
+				onsubmit: false,
 				onprocess: false,
 				lastApply: {},
 				form: JSON.parse(JSON.stringify(formDefault)),
@@ -141,14 +143,18 @@
 			},
 			doSubmit() {
 				const that = this
+				this.onsubmit = true
 				this.form['rentTime'] = toDatetime(this.form['time'])
 				apply(this.form).then((response) => {
 					if (response && response.status == 0) {
 						uni.showToast({
 							title: that.$t('rent.form.submit-ok')
 						})
+						that.onsubmit = false
 						that.updateStatus()
 					}
+				}).catch(() => {
+					this.onsubmit = false
 				})
 			},
 			cancel() {

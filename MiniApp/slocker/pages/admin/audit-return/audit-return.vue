@@ -1,64 +1,67 @@
 <template>
-	<view class="container">
-		<no-data v-if="list.length == 0"></no-data>
-		<uni-card v-else v-for="item in list" :key="item.id">
-			<slot name="header">
-				<view class="header">
-					<view class="title">{{item.creationTime | formatDatetime}}</view>
-					<view class="status">
-						<uni-tag :type="fetchTagType(item.status)" :text="item.statusDesc"></uni-tag>
+	<view>
+		<uni-search-bar v-model="keyword" @cancel="cancelSearch" @clear="cancelSearch" @confirm="search" @input="search"
+			@blur="search" placeholder="输入姓名或手机号"></uni-search-bar>
+		<view class="container">
+			<no-data v-if="list.length == 0"></no-data>
+			<uni-card v-else v-for="item in list" :key="item.id">
+				<slot name="header">
+					<view class="header">
+						<view class="title">{{item.creationTime | formatDatetime}}</view>
+						<view class="status">
+							<uni-tag :type="fetchTagType(item.status)" :text="item.statusDesc"></uni-tag>
+						</view>
 					</view>
-				</view>
-			</slot>
-			<uni-list>
-				<uni-list-item :title="$t('rent.history.name')" :rightText="item.name"></uni-list-item>
-				<uni-list-item :title="$t('rent.history.rentTime')" :rightText="item.rentTime | formatDatetime">
-				</uni-list-item>
-			</uni-list>
-		</uni-card>
+				</slot>
+				<uni-list>
+					<uni-list-item :title="$t('rent.history.name')" :rightText="item.name"></uni-list-item>
+					<uni-list-item :title="$t('rent.history.rentTime')" :rightText="item.rentTime | formatDatetime">
+					</uni-list-item>
+				</uni-list>
+			</uni-card>
+		</view>
 		<uni-load-more :status="moreStatus"></uni-load-more>
 	</view>
 </template>
 
 <script>
 	import {
-		getMyList
-	} from '@/api/apply.js'
+		getList,
+		detail,
+		audit,
+		discard
+	} from '../../../api/rent.js'
 	import {
 		rentApplyStatus
 	} from '@/static/enums.js'
-
-
 	export default {
 		data() {
 			return {
-				rentApplyStatus: rentApplyStatus,
 				list: [],
-				title: this.$t(''),
-				page: 1,
-				count: 0,
 				total: 0,
-				moreStatus: 'noMore'
+				keyword: '',
+				page: 1
 			}
 		},
 		computed: {
+			count() {
+				return this.list.length
+			},
 			canLoadMore() {
 				return this.count < this.total
+			},
+			skipCount() {
+				return this.page * this.count
 			}
 		},
-		onShow() {
+		onLoad() {
 			this.getList()
 		},
 		onReachBottom() {
-			if (this.canLoadMore) {
-				this.getList()
-			}
+			this.more()
 		},
 		onPullDownRefresh() {
-			this.count = 0
-			this.list = []
-			this.page = 1
-			this.getList()
+			this.search()
 		},
 		methods: {
 			fetchTagType(status) {
@@ -77,21 +80,31 @@
 			},
 			getList() {
 				this.moreStatus = 'loading'
-				getMyList({
+				getList({
 					page: this.page,
-					skipCount: this.page * this.count
+					skipCount: this.skipCount,
+					filter: this.keyword,
+					status: 1
 				}).then(res => {
 					res.items.map(item => {
 						this.list.push(item)
 					})
 					uni.stopPullDownRefresh()
 					this.total = res.totalCount
-					this.count += res.items.length
 					this.moreStatus = this.canLoadMore ? 'more' : 'noMore'
 				}).catch(() => {
 					uni.stopPullDownRefresh()
 					this.moreStatus = 'noMore'
 				})
+			},
+			search() {
+				this.list = []
+				this.page = 1
+				this.getList()
+			},
+			cancelSearch() {
+				this.keyword = ''
+				this.search()
 			},
 			more() {
 				this.page += 1

@@ -19,7 +19,6 @@ namespace SharedLocker.SharedLockers
         /// <param name="appId">应用id</param>
         /// <param name="name">姓名</param>
         /// <param name="phone">联系电话</param>
-        /// <param name="rentTime">起租时间</param>
         public LockerRentApply(Guid id, Guid userId, Guid? tenantId, Guid? appId, string name, string phone) : base(id)
         {
             UserId = userId;
@@ -175,6 +174,10 @@ namespace SharedLocker.SharedLockers
                 CancelReason = reason;
             }
         }
+		
+		public void SetApplyCount(int count){
+			Count = count;
+		}
 
         #endregion
     }
