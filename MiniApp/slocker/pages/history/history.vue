@@ -1,7 +1,6 @@
 <template>
 	<view class="container">
-		<no-data v-if="list.length == 0"></no-data>
-		<uni-card v-else v-for="item in list" :key="item.id">
+		<uni-card v-for="item in list" :key="item.id">
 			<slot name="header">
 				<view class="header">
 					<view class="title">{{item.creationTime | formatDatetime}}</view>
@@ -94,8 +93,10 @@
 				})
 			},
 			more() {
-				this.page += 1
-				this.getList()
+				if (this.canLoadMore) {
+					this.page += 1
+					this.getList()
+				}
 			}
 		}
 	}

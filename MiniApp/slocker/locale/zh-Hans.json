@@ -70,5 +70,7 @@
 	"rent.history.returnTime": "退租时间",
 	"rent.history.cancelTime": "取消时间",
 	"rent.history.lockers": "储物柜编号",
-	"rent.form.submit-ok": "提交成功！"
+	"rent.form.submit-ok": "提交成功！",
+	"page.login": "登录",
+	"page.mine": "我的"
 }

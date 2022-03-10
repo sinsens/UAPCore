@@ -14,7 +14,7 @@ import {
  */
 function getList(param) {
 	const p = getPageParams(param)
-	return get(`/api/shared-locker/rent/getlist?${p}`)
+	return get(`/api/shared-locker/locker/getlist?${p}`)
 }
 
 

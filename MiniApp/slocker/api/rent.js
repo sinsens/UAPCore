@@ -31,7 +31,7 @@ function finish(id, param = {
 	"returnTime": "2022-03-09T07:11:10.499Z", // 归还时间
 	"returnRemark": "string" // 归还备注
 }) {
-	return put(`/api/shared-locker/rent/rent/${id}`, param)
+	return put(`/api/shared-locker/rent/return/${id}`, param)
 }
 
 /**

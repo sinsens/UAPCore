@@ -119,10 +119,10 @@ function handleErrorResponse(res) {
 			showCancel: false
 		})
 	} else if (error.message || error.details) {
-		uni.showToast({
-			duration: 3000,
-			icon: 'error',
-			title: error.message || error.details
+		const message = error.message || error.details
+		uni.showModal({
+			title: '发生错误',
+			content: message
 		})
 	}
 }
@@ -190,7 +190,16 @@ export function getPageParams(params) {
 
 	let urlpost = ''
 	for (const key in options) {
-		const value = typeof(options[key]) == 'object' ? JSON.parse(options[key]) : options[key]
+		const rVal = options[key]
+		let value = undefined
+		if (Array.isArray(rVal)) {
+			if (rVal.length == 0) {
+				continue
+			}
+			value = rVal.toString()
+		} else {
+			value = typeof(rVal) == 'object' ? JSON.parse(rVal) : rVal
+		}
 		urlpost += `${key}=${value}&`
 	}
 

@@ -66,6 +66,9 @@ const store = new Vuex.Store({
 			uni.setStorageSync(`${key}_lang`, lang)
 		},
 		logout(state) {
+			for(const key in state){
+				state[key] = ''
+			}
 			uni.clearStorageSync()
 		}
 	}

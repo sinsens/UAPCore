@@ -4,13 +4,13 @@ start dotnet run
 cd  ../../AuthServer/AuthServer.Host
 start dotnet run
 
-cd ../MicroServices/Business/Business.Host
+cd ../../MicroServices/Business/Business.Host
 start dotnet run
 
-cd ../MicroServices/SharedLocker/host/SharedLocker.HttpApi.Host
+cd ../../SharedLocker/host/SharedLocker.HttpApi.Host
 start dotnet run
 
-cd ../FileStorage/FileStorage.Host
+cd ../../../FileStorage/FileStorage.Host
 start dotnet run
 
 cd ../../../Gateways/WebAppGateway/WebAppGateway.Host

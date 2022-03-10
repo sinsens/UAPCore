@@ -50,7 +50,7 @@ namespace SharedLocker.Domain.SharedLockers
         {
             var query = await _repository.GetQueryableAsync();
 
-            var entity = await query.Include(x => x.LockerRent).FirstOrDefaultAsync(x => x.Id == id);
+            var entity = await query.Include(x => x.LockerRent).ThenInclude(rent => rent.RentInfos).ThenInclude(x => x.Locker).FirstOrDefaultAsync(x => x.Id == id);
 
             return ObjectMapper.Map<LockerRentApply, LockerRentApplyDto>(entity);
         }

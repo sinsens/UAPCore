@@ -14,62 +14,59 @@
 		}, {
 			"path": "pages/login/login",
 			"style": {
-				"navigationBarTitleText": "",
+				"navigationBarTitleText": "%page.login%",
 				"enablePullDownRefresh": false
 			}
-
 		}, {
 			"path": "pages/mine/mine",
 			"style": {
-				"navigationBarTitleText": "",
+				"navigationBarTitleText": "%page.mine%",
 				"enablePullDownRefresh": false
 			}
-
 		}, {
 			"path": "pages/history/history",
 			"style": {
 				"navigationBarTitleText": "%index.history%",
 				"enablePullDownRefresh": true
 			}
-
+		}, {
+			"path": "pages/login/admin",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+		}, {
+			"path": "pages/admin/index",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+		}, {
+			"path": "pages/admin/apply/apply-list",
+			"style": {
+				"navigationBarTitleText": "申请列表",
+				"enablePullDownRefresh": true
+			}
+		}, {
+			"path": "pages/admin/apply/apply-detail",
+			"style": {
+				"navigationBarTitleText": "申请详情",
+				"enablePullDownRefresh": true
+			}
+		}, {
+			"path": "pages/admin/rent/rent-list",
+			"style": {
+				"navigationBarTitleText": "租用列表",
+				"enablePullDownRefresh": true
+			}
+		}, {
+			"path": "pages/admin/rent/rent-detail",
+			"style": {
+				"navigationBarTitleText": "租用详情",
+				"enablePullDownRefresh": true
+			}
 		}
-	    ,{
-            "path" : "pages/login/admin",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-        ,{
-            "path" : "pages/admin/index",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-        ,{
-            "path" : "pages/admin/apply/apply",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "",
-                "enablePullDownRefresh": true
-            }
-            
-        }
-        ,{
-            "path" : "pages/admin/audit-return/audit-return",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "",
-                "enablePullDownRefresh": true
-            }
-            
-        }
-    ],
+	],
 	"tabBar": {
 		"color": "#7A7E83",
 		"selectedColor": "#007AFF",

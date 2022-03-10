@@ -3,11 +3,10 @@
 		<uni-search-bar v-model="keyword" @cancel="cancelSearch" @clear="cancelSearch" @confirm="search" @input="search"
 			@blur="search" placeholder="输入姓名或手机号"></uni-search-bar>
 		<view class="container">
-			<no-data v-if="list.length == 0"></no-data>
-			<uni-card v-else v-for="item in list" :key="item.id">
+			<uni-card v-for="item in list" :key="item.id">
 				<slot name="header">
 					<view class="header">
-						<view class="title">{{item.creationTime | formatDatetime}}</view>
+						<view class="title">申请时间:{{item.creationTime | formatDatetime}}</view>
 						<view class="status">
 							<uni-tag :type="fetchTagType(item.status)" :text="item.statusDesc"></uni-tag>
 						</view>
@@ -19,11 +18,15 @@
 					<uni-list-item title="申请数量" :rightText="item.count"></uni-list-item>
 					<uni-list-item title="申请租用时间" :rightText="item.rentTime | formatDatetime">
 					</uni-list-item>
-					<uni-list-item title="申请时间" :rightText="item.creationTime | formatDatetime"></uni-list-item>
 				</uni-list>
 				<slot name="footer">
-					<button type="primary" @click="acceptApply(item)">通过</button>
-					<button type="warn" @click="rejectApply(item)">拒绝</button>
+					<view v-if="item.status === 0">
+						<button type="primary" @click="acceptApply(item)">通过</button>
+						<button type="warn" @click="rejectApply(item)">拒绝</button>
+					</view>
+					<view v-else>
+						<button @click="detail(item.id)">详情</button>
+					</view>
 				</slot>
 			</uni-card>
 		</view>
@@ -39,13 +42,17 @@
 				</uni-list>
 				<uni-forms ref="acceptForm" :modelValue="form" :rules="acceptRules">
 					<uni-forms-item label="选择储物柜" name="lockerIds">
-						<uni-data-picker v-model="form.lockerIds"></uni-data-picker>
+						<uni-data-checkbox multiple emptyText="无空闲储物柜" :localdata="lockers" v-model="form.lockerIds">
+						</uni-data-checkbox>
 					</uni-forms-item>
 					<uni-forms-item label="备注">
 						<uni-easyinput maxlength="500" type="textarea" v-model="form.remark"></uni-easyinput>
 					</uni-forms-item>
 				</uni-forms>
-				<slot name="footer"><button type="primary" @click="accept">通过</button></slot>
+				<slot name="footer">
+					<button type="primary" @click="accept">通过</button>
+					<button @click="closeAcceptDialog">取消</button>
+				</slot>
 			</uni-card>
 		</uni-popup>
 		<uni-popup ref="rejectDialog" background-color="#fff" :isMaskClick="false">
@@ -62,7 +69,10 @@
 						<uni-easyinput maxlength="500" type="textarea" v-model="form.remark"></uni-easyinput>
 					</uni-forms-item>
 				</uni-forms>
-				<slot name="footer"><button type="warn" @click="reject">拒绝</button></slot>
+				<slot name="footer">
+					<button type="warn" @click="reject">拒绝</button>
+					<button @click="closeRejectDialog">取消</button>
+				</slot>
 			</uni-card>
 		</uni-popup>
 	</view>
@@ -71,7 +81,8 @@
 <script>
 	import {
 		getList,
-		detail
+		detail,
+		audit
 	} from '../../../api/apply.js'
 	import lockerApi from '../../../api/locker.js'
 	import {
@@ -86,6 +97,7 @@
 				page: 1,
 				applyInfo: {},
 				lockers: [],
+				status: '',
 				form: {
 					remark: '',
 					result: false,
@@ -120,9 +132,34 @@
 				return this.page * this.count
 			}
 		},
-		onLoad() {
+		onLoad(options) {
+			if (options && options.hasOwnProperty('status')) {
+				this.status = Number(options.status)
+				let title = '申请列表'
+				switch (this.status) {
+					case rentApplyStatus.PendingAudit:
+						title = '待审核列表'
+						break
+					case rentApplyStatus.Accepted:
+						title = '已通过列表'
+						break
+					case rentApplyStatus.Rejected:
+						title = '已拒绝列表'
+						break
+					case rentApplyStatus.Canceled:
+						title = '已取消列表'
+						break
+					case rentApplyStatus.Discard:
+						title = '已作废列表'
+						break
+				}
+				uni.setNavigationBarTitle({
+					title: title
+				})
+			}
+		},
+		onShow() {
 			this.getList()
-			this.loadLockers()
 		},
 		onReachBottom() {
 			this.more()
@@ -131,28 +168,84 @@
 			this.search()
 		},
 		methods: {
+			closeRejectDialog() {
+				this.$refs.rejectDialog.close()
+			},
+			closeAcceptDialog() {
+				this.$refs.acceptDialog.close()
+			},
+			detail(id) {
+				uni.navigateTo({
+					url: `apply-detail?id=${id}`
+				})
+			},
 			accept() {
 				const that = this
+				const postData = this.form
+				const applyInfo = this.applyInfo
+				let note = ''
+				const gotCount = postData.lockerIds.length
+				if (applyInfo.count > gotCount) {
+					note = `储物柜分配数量(${applyInfo.count})少于申请数量(${gotCount})`
+				} else if (applyInfo.count < gotCount) {
+					note = `储物柜分配数量(${applyInfo.count})超出申请数量(${gotCount})`
+				}
 				uni.showModal({
-					content: '是否通过该申请？'
+					title: '是否通过该申请？',
+					content: note,
+					success(c) {
+						if (c.cancel) return
+						postData.result = true
+						that.$refs.acceptForm.validate().then(data => {
+							that.doAudit(postData)
+						})
+					}
 				})
 			},
 			reject() {
 				const that = this
+				const postData = this.form
 				uni.showModal({
-					content: '是否拒绝该申请？'
+					content: '是否拒绝该申请？',
+					confirmColor: '#CE3C39',
+					success(c) {
+						if (c.cancel) return
+						postData.result = false
+						that.$refs.rejectForm.validate().then(data => {
+							that.doAudit(postData)
+						})
+					}
 				})
 			},
-			loadLockers() {
+			doAudit(auditData = {}) {
+				const {
+					id
+				} = this.applyInfo
+				audit(id, auditData).then(() => {
+					this.$refs.acceptDialog.close()
+					this.$refs.rejectDialog.close()
+					this.getList()
+				})
+			},
+			loadLockers(maxCount = 10) {
 				lockerApi.getList({
-					status: 1,
-					maxResultCount: 99
+					status: 0,
+					maxResultCount: maxCount || 50
 				}).then(res => {
-					this.lockers = res.items
+					this.lockers = res.items.map(item => {
+						return {
+							"value": item.id,
+							"text": `${item.name}(编号${item.number})`
+						}
+					});
 				})
 			},
 			acceptApply(info) {
 				this.applyInfo = info
+				const count = (info.count + 1) / 5
+				const resultCount = (count < 1 ? 1 : count) * 5
+				this.loadLockers(resultCount)
+				this.form.lockerIds = []
 				this.$refs.acceptDialog.open()
 			},
 			rejectApply(info) {
@@ -179,7 +272,7 @@
 					page: this.page,
 					skipCount: this.skipCount,
 					filter: this.keyword,
-					status: 0
+					status: this.status
 				}).then(res => {
 					res.items.map(item => {
 						this.list.push(item)
@@ -202,8 +295,10 @@
 				this.search()
 			},
 			more() {
-				this.page += 1
-				this.getList()
+				if (this.canLoadMore) {
+					this.page += 1
+					this.getList()
+				}
 			}
 		}
 	}
@@ -215,7 +310,7 @@
 	}
 
 	.header .title {
-		font-size: 1.2em;
+		font-size: 1.1em;
 		font-weight: 500;
 		display: inline-block;
 	}

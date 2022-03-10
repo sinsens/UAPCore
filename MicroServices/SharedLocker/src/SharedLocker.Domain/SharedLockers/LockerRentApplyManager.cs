@@ -30,13 +30,17 @@ namespace SharedLocker.SharedLockers
             ICurrentUser currentUser,
             IStringLocalizer<SharedLockerResource> stringLocalizer,
             IRepository<LockerRent, Guid> repositoryrent,
-            IRepository<LockerRentApply, Guid> repositoryapply)
+            IRepository<LockerRentApply, Guid> repositoryapply,
+			LockerRentManager rentManager,
+			IUnitOfWorkManager unitOfWorkManager)
         {
             _currentApp = currentApp;
             _currentUser = currentUser;
             _stringLocalizer = stringLocalizer;
             _repositoryRent = repositoryrent;
             _repositoryApply = repositoryapply;
+			_rentManager = rentManager;
+			_unitOfWorkManager = unitOfWorkManager;
         }
 
         /// <summary>
