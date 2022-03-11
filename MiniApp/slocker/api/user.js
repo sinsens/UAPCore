@@ -16,7 +16,7 @@ export function adminLogin(param = {
 	password: '',
 }) {
 	const loginParam = {
-		tenant: config.client.tenant,
+		tenant: store.state.tenant || config.client.tenant,
 		username: param.username || '',
 		password: param.password || '',
 		client_id: config.client.client_id,

@@ -32,13 +32,13 @@
 		}, {
 			"path": "pages/login/admin",
 			"style": {
-				"navigationBarTitleText": "",
+				"navigationBarTitleText": "管理员登录",
 				"enablePullDownRefresh": false
 			}
 		}, {
 			"path": "pages/admin/index",
 			"style": {
-				"navigationBarTitleText": "",
+				"navigationBarTitleText": "储物柜管理",
 				"enablePullDownRefresh": false
 			}
 		}, {
@@ -56,7 +56,7 @@
 		}, {
 			"path": "pages/admin/rent/rent-list",
 			"style": {
-				"navigationBarTitleText": "租用列表",
+				"navigationBarTitleText": "租用记录",
 				"enablePullDownRefresh": true
 			}
 		}, {

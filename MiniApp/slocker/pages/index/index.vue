@@ -2,9 +2,9 @@
 	<view class="container">
 		<!-- 申请表 -->
 		<uni-card v-if="!onprocess">
-			<view slot="title">
+			<template slot="title">
 				<view class="title">{{$t('rent.form-title')}}</view>
-			</view>
+			</template>
 			<view>
 				<uni-forms ref="form" :modelValue="form" :rules="rules">
 					<uni-forms-item name="name" :label="$t('rent.form-name')">
@@ -28,6 +28,9 @@
 		</uni-card>
 		<!--进度表-->
 		<uni-card v-else>
+			<template slot="title">
+				<view class="title">{{$t('rent.form-title')}}</view>
+			</template>
 			<uni-list>
 				<uni-list-item :title="$t('rent.process.name')" :rightText="lastApply.name"></uni-list-item>
 				<uni-list-item :title="$t('rent.process.rentTime')" :rightText="lastApply.rentTime | formatDatetime">
@@ -37,9 +40,9 @@
 				</uni-list-item>
 				<uni-list-item :title="$t('rent.process.statusDesc')" :rightText="lastApply.statusDesc"></uni-list-item>
 			</uni-list>
-			<slot name="footer">
+			<template slot="actions">
 				<button type="warn" @click="cancel">{{$t('rent.cancel')}}</button>
-			</slot>
+			</template>
 		</uni-card>
 	</view>
 </template>

@@ -4,23 +4,25 @@
 			@blur="search" placeholder="输入姓名或手机号"></uni-search-bar>
 		<view class="container">
 			<uni-card v-for="item in list" :key="item.id">
-				<slot name="header">
+				<template slot="title">
 					<view class="header">
-						<view class="title">{{item.creationTime | formatDatetime}}</view>
+						<view class="title">{{item.name}}</view>
 						<view class="status">
 							<uni-tag :type="fetchTagType(item.status)" :text="item.statusDesc"></uni-tag>
 						</view>
 					</view>
-				</slot>
+				</template>
 				<uni-list>
-					<uni-list-item :title="$t('rent.history.name')" :rightText="item.name"></uni-list-item>
-					<uni-list-item :title="$t('rent.history.rentTime')" :rightText="item.rentTime | formatDatetime">
+					<uni-list-item title="联系方式" :rightText="item.phone">
+					</uni-list-item>
+					<uni-list-item title="租用时间" :rightText="item.rentTime | formatDatetime">
 					</uni-list-item>
 				</uni-list>
-				<slot name="footer">
-					<button v-if="item.status == rentStatus.InService" type="primary" @click="preReturn(item)">归还</button>
+				<template slot="actions">
+					<button v-if="item.status == rentStatus.InService" type="primary"
+						@click="preReturn(item.id)">归还</button>
 					<button @click="detail(item.id)">详情</button>
-				</slot>
+				</template>
 			</uni-card>
 		</view>
 		<uni-load-more :status="moreStatus"></uni-load-more>
@@ -33,7 +35,10 @@
 					<uni-list-item title="租用时间" :rightText="rentInfo.rentTime | formatDatetime">
 					</uni-list-item>
 					<uni-list-item title="储物柜">
-
+						<template slot="footer">
+							<uni-tag :text="locker.number" :key="locker.id" circle v-for="locker in rentInfo.lockers">
+							</uni-tag>
+						</template>
 					</uni-list-item>
 				</uni-list>
 				<uni-forms ref="returnForm" :modelValue="form">
@@ -44,10 +49,10 @@
 						<uni-easyinput maxlength="500" type="textarea" v-model="form.returnRemark"></uni-easyinput>
 					</uni-forms-item>
 				</uni-forms>
-				<slot name="footer">
+				<template slot="actions">
 					<button type="primary" @click="submit">确认归还</button>
 					<button @click="closeDialog">取消</button>
-				</slot>
+				</template>
 			</uni-card>
 		</uni-popup>
 	</view>
@@ -99,8 +104,8 @@
 		onLoad(options) {
 			if (options && options.hasOwnProperty('status')) {
 				this.status = [Number(options['status'])]
-				let title = ''
-				switch (this.status) {
+				let title = '租用记录'
+				switch (Number(options['status'])) {
 					case rentStatus.InService:
 						title = '待归还列表'
 						break
@@ -132,9 +137,11 @@
 			closeDialog() {
 				this.$refs.returnDialog.close()
 			},
-			preReturn(rentInfo) {
-				this.rentInfo = rentInfo
-				this.$refs.returnDialog.open()
+			preReturn(id) {
+				rentApi.detail(id).then(rentInfo => {
+					this.rentInfo = rentInfo
+					this.$refs.returnDialog.open()
+				})
 			},
 			submit() {
 				const that = this
@@ -162,7 +169,7 @@
 					returnTime: toDatetime(returnTime),
 					returnRemark
 				}
-				
+
 				rentApi.finish(id, postData).then(res => {
 					uni.showToast({
 						title: '归还成功'
@@ -228,18 +235,4 @@
 </script>
 
 <style>
-	.header {
-		height: 1.85em;
-	}
-
-	.header .title {
-		font-size: 1.2em;
-		font-weight: 500;
-		display: inline-block;
-	}
-
-	.header .status {
-		float: right;
-		display: inline;
-	}
 </style>

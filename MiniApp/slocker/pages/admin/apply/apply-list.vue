@@ -4,14 +4,14 @@
 			@blur="search" placeholder="输入姓名或手机号"></uni-search-bar>
 		<view class="container">
 			<uni-card v-for="item in list" :key="item.id">
-				<slot name="header">
+				<template slot="title">
 					<view class="header">
 						<view class="title">申请时间:{{item.creationTime | formatDatetime}}</view>
 						<view class="status">
 							<uni-tag :type="fetchTagType(item.status)" :text="item.statusDesc"></uni-tag>
 						</view>
 					</view>
-				</slot>
+				</template>
 				<uni-list>
 					<uni-list-item title="申请人" :rightText="item.name"></uni-list-item>
 					<uni-list-item title="联系电话" :rightText="item.phone"></uni-list-item>
@@ -19,7 +19,7 @@
 					<uni-list-item title="申请租用时间" :rightText="item.rentTime | formatDatetime">
 					</uni-list-item>
 				</uni-list>
-				<slot name="footer">
+				<template slot="actions">
 					<view v-if="item.status === 0">
 						<button type="primary" @click="acceptApply(item)">通过</button>
 						<button type="warn" @click="rejectApply(item)">拒绝</button>
@@ -27,7 +27,7 @@
 					<view v-else>
 						<button @click="detail(item.id)">详情</button>
 					</view>
-				</slot>
+				</template>
 			</uni-card>
 		</view>
 		<uni-load-more :status="moreStatus"></uni-load-more>
@@ -49,10 +49,10 @@
 						<uni-easyinput maxlength="500" type="textarea" v-model="form.remark"></uni-easyinput>
 					</uni-forms-item>
 				</uni-forms>
-				<slot name="footer">
+				<template slot="actions">
 					<button type="primary" @click="accept">通过</button>
 					<button @click="closeAcceptDialog">取消</button>
-				</slot>
+				</template>
 			</uni-card>
 		</uni-popup>
 		<uni-popup ref="rejectDialog" background-color="#fff" :isMaskClick="false">
@@ -69,10 +69,10 @@
 						<uni-easyinput maxlength="500" type="textarea" v-model="form.remark"></uni-easyinput>
 					</uni-forms-item>
 				</uni-forms>
-				<slot name="footer">
+				<template slot="actions">
 					<button type="warn" @click="reject">拒绝</button>
 					<button @click="closeRejectDialog">取消</button>
-				</slot>
+				</template>
 			</uni-card>
 		</uni-popup>
 	</view>
@@ -305,18 +305,4 @@
 </script>
 
 <style>
-	.header {
-		height: 1.85em;
-	}
-
-	.header .title {
-		font-size: 1.1em;
-		font-weight: 500;
-		display: inline-block;
-	}
-
-	.header .status {
-		float: right;
-		display: inline;
-	}
 </style>

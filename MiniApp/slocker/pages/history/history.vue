@@ -1,14 +1,14 @@
 <template>
 	<view class="container">
 		<uni-card v-for="item in list" :key="item.id">
-			<slot name="header">
+			<template slot="header">
 				<view class="header">
 					<view class="title">{{item.creationTime | formatDatetime}}</view>
 					<view class="status">
 						<uni-tag :type="fetchTagType(item.status)" :text="item.statusDesc"></uni-tag>
 					</view>
 				</view>
-			</slot>
+			</template>
 			<uni-list>
 				<uni-list-item :title="$t('rent.history.name')" :rightText="item.name"></uni-list-item>
 				<uni-list-item :title="$t('rent.history.rentTime')" :rightText="item.rentTime | formatDatetime">
@@ -103,18 +103,4 @@
 </script>
 
 <style>
-	.header {
-		height: 1.85em;
-	}
-
-	.header .title {
-		font-size: 1.2em;
-		font-weight: 500;
-		display: inline-block;
-	}
-
-	.header .status {
-		float: right;
-		display: inline;
-	}
 </style>

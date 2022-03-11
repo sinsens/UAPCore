@@ -24,6 +24,7 @@ function updateStorage() {
 const store = new Vuex.Store({
 	state: { //存放状态
 		userid: uni.getStorageSync(`${key}_userid`),
+		tenant: uni.getStorageSync(`${key}_tenant`) || '',
 		tenantid: uni.getStorageSync(`${key}_tenantid`),
 		appid: uni.getStorageSync(`${key}_appid`),
 		token: uni.getStorageSync(`${key}_token`),
@@ -40,6 +41,10 @@ const store = new Vuex.Store({
 		setUserId(state, userid) {
 			state.userid = userid
 			uni.setStorageSync(`${key}_userid`, userid)
+		},
+		setTenant(state, tenant) {
+			state.tenant = tenant
+			uni.setStorageSync(`${key}_tenant`, tenant)
 		},
 		setTenantId(state, tenantid) {
 			state.tenantid = tenantid
@@ -66,7 +71,7 @@ const store = new Vuex.Store({
 			uni.setStorageSync(`${key}_lang`, lang)
 		},
 		logout(state) {
-			for(const key in state){
+			for (const key in state) {
 				state[key] = ''
 			}
 			uni.clearStorageSync()

@@ -1,14 +1,14 @@
 <template>
 	<view>
 		<uni-card>
-			<slot name="header">
+			<template slot="title">
 				<view class="header">
 					<view class="title">租用信息</view>
 					<view class="status">
 						<uni-tag :type="fetchTagType(rentInfo.status)" :text="rentInfo.statusDesc"></uni-tag>
 					</view>
 				</view>
-			</slot>
+			</template>
 			<uni-list>
 				<uni-list-item title="租用人" :rightText="rentInfo.name"></uni-list-item>
 				<uni-list-item title="联系电话" :rightText="rentInfo.phone"></uni-list-item>
@@ -16,19 +16,19 @@
 				<uni-list-item title="租用时间" :rightText="rentInfo.rentTime | formatDatetime">
 				</uni-list-item>
 				<uni-list-item title="储物柜">
-					<slot name="footer">
-						<uni-tag :text="locker.number" circle v-for="locker in rentInfo.lockers">
+					<template slot="footer">
+						<uni-tag :text="locker.number" :key="locker.id" circle v-for="locker in rentInfo.lockers">
 						</uni-tag>
-					</slot>
+					</template>
 				</uni-list-item>
 			</uni-list>
 		</uni-card>
 		<uni-card>
-			<slot name="header">
+			<template slot="title">
 				<view class="header">
 					<view class="title">归还信息</view>
 				</view>
-			</slot>
+			</template>
 			<uni-list>
 				<uni-list-item title="归还时间" :rightText="rentInfo.returnTime | formatDatetime"></uni-list-item>
 				<uni-list-item title="备注" :rightText="rentInfo.returnRemark"></uni-list-item>
@@ -82,18 +82,5 @@
 </script>
 
 <style>
-	.header {
-		height: 1.85em;
-	}
-
-	.header .title {
-		font-size: 1.2em;
-		font-weight: 500;
-		display: inline-block;
-	}
-
-	.header .status {
-		float: right;
-		display: inline;
-	}
+	
 </style>
