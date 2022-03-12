@@ -24,15 +24,13 @@ namespace SharedLocker.SharedLockers
         private readonly IRepository<LockerRent, Guid> _repositoryRent;
         private readonly IRepository<LockerRentApply, Guid> _repositoryApply;
         private readonly LockerRentManager _rentManager;
-        private readonly IUnitOfWorkManager _unitOfWorkManager;
 
         public LockerRentApplyManager(ICurrentApp currentApp,
             ICurrentUser currentUser,
             IStringLocalizer<SharedLockerResource> stringLocalizer,
             IRepository<LockerRent, Guid> repositoryrent,
             IRepository<LockerRentApply, Guid> repositoryapply,
-			LockerRentManager rentManager,
-			IUnitOfWorkManager unitOfWorkManager)
+			LockerRentManager rentManager)
         {
             _currentApp = currentApp;
             _currentUser = currentUser;
@@ -40,7 +38,6 @@ namespace SharedLocker.SharedLockers
             _repositoryRent = repositoryrent;
             _repositoryApply = repositoryapply;
 			_rentManager = rentManager;
-			_unitOfWorkManager = unitOfWorkManager;
         }
 
         /// <summary>
@@ -194,7 +191,6 @@ namespace SharedLocker.SharedLockers
             {
                 var rent = await _rentManager.RentAsync(rentApply.AppId, rentApply.Name, rentApply.Phone, "申请通过生成", rentApply.RentTime, lockerIds);
                 rent.SetPinyinName(rentApply.PinyinName, rentApply.FullPinyinName);
-                await _unitOfWorkManager.Current.CompleteAsync();
 
                 rentApply.SetRentId(rent.Id);
             }
