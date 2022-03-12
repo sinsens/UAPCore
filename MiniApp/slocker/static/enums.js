@@ -49,3 +49,20 @@ export const rentStatus = {
 	 */
 	Discard: 10,
 }
+
+
+/**
+ * 二维码类别
+ */
+export const qrCodeType = {
+
+	/**
+	 * 申请
+	 */
+	Apply: 1,
+	
+	/**
+	 * 租用
+	 */
+	Rent: 2,
+}

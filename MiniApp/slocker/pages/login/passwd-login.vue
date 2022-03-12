@@ -44,7 +44,7 @@
 			submit() {
 				const that = this
 				this.$refs.form.validate().then(res => {
-					passwdLogin(that.form)
+					passwdLogin(that.form, '/pages/index/index')
 				})
 			}
 		}

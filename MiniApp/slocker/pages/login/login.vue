@@ -1,6 +1,6 @@
 <template>
 	<view class="container">
-		<view class=".btn-area">
+		<view class="btn-area">
 			<button type="primary" @click="login()">点击授权登录</button>
 		</view>
 	</view>
@@ -16,12 +16,25 @@
 
 			}
 		},
-		mounted() {
-			if (getApp().globalData.hasLogin) {
+		onLoad() {
+			if (this.$store.state.hasLogin) {
 				uni.reLaunch({
 					url: '/pages/index/index'
 				})
 			}
+			uni.getProvider({
+				service: 'oauth',
+				success(res) {
+					console.log('登录服务类型')
+					console.log(res)
+					if (res.provider.length == 0) {
+						// 不支持一键授权登录，跳到密码登录
+						uni.reLaunch({
+							url: './passwd-login'
+						})
+					}
+				}
+			})
 		},
 		methods: {
 			login() {

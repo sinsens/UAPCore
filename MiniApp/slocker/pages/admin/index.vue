@@ -1,6 +1,11 @@
 <template>
 	<view class="container">
 		<uni-list>
+			<uni-list-item>
+				<template slot="body" @click="startQrCodeScan">
+					扫码处理<uni-icons type="camera"></uni-icons>
+				</template>
+			</uni-list-item>
 			<uni-list-item link to="apply/apply-list?status=0" title="申请列表(待审核)" @click="audit" show-badge="true"
 				:badge-text="waitAuditCount"></uni-list-item>
 			<uni-list-item link to="apply/apply-list" title="申请列表(全部)" @click="audit" show-badge="true"
@@ -18,9 +23,13 @@
 
 <script>
 	import {
+		qrCodeType
+	} from '../../static/enums.js'
+	import {
 		getList
 	} from '../../api/apply.js'
 	import rentApi from '../../api/rent.js'
+	import w_md5 from '../../js_sdk/zww-md5/w_md5.js'
 
 	export default {
 		data() {
@@ -40,6 +49,61 @@
 			this.updateStatus()
 		},
 		methods: {
+			startQrCodeScan() {
+				const that = this
+				uni.scanCode({
+					success(res) {
+						console.log('扫码成功')
+						console.log(res)
+						if (res.scanType != 'QR_CODE') {
+							uni.showToast({
+								icon: 'error',
+								title: '无法识别'
+							})
+						}
+						that.resolveQrCode(res.result)
+					}
+				})
+			},
+			resolveQrCode(data) {
+				try {
+					const rawData = JSON.parse(data)
+					const {
+						type,
+						id,
+						code,
+						sign
+					} = rawData
+					const signStr = w_md5.hex_md5_16(`${this.$store.state.tenantid}${id}${code}`)
+					if (signStr != sign) {
+						uni.showToast({
+							icon: 'error',
+							title: '校验失败'
+						})
+						return
+					}
+					if (type) {
+						let url = ''
+						switch (rawData.type) {
+							case qrCodeType.Apply:
+								url = `apply/apply-detail?id=${id}`
+								break
+							case qrCodeType.Rent:
+								url = `rent/rent-detail?id=${id}`
+								break
+						}
+						uni.redirectTo({
+							url: url
+						})
+					}
+				} catch (e) {
+					console.log('二维码解析失败')
+					uni.showToast({
+						icon: 'error',
+						title: '内容错误'
+					})
+				}
+			},
 			updateStatus() {
 				getList({
 					status: 0,

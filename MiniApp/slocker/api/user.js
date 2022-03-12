@@ -11,10 +11,10 @@ const loginInfo = {
 	lookupUseRecentlyTenant: true
 }
 
-export function adminLogin(param = {
+export function passwdLogin(param = {
 	username: '',
 	password: '',
-}) {
+}, redirect_url = '') {
 	const loginParam = {
 		tenant: store.state.tenant || config.client.tenant,
 		username: param.username || '',
@@ -36,7 +36,7 @@ export function adminLogin(param = {
 			title: '登录成功！'
 		})
 		uni.reLaunch({
-			url: '/pages/admin/index'
+			url: redirect_url || '/pages/admin/index'
 		})
 	}).catch(err => {
 		uni.showToast({

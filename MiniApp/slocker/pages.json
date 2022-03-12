@@ -6,12 +6,6 @@
 				"navigationBarTitleText": "%index.title%"
 			}
 		}, {
-			"path": "pages/process/process",
-			"style": {
-				"navigationBarTitleText": "%index.process%",
-				"enablePullDownRefresh": true
-			}
-		}, {
 			"path": "pages/login/login",
 			"style": {
 				"navigationBarTitleText": "%page.login%",
@@ -33,6 +27,12 @@
 			"path": "pages/login/admin",
 			"style": {
 				"navigationBarTitleText": "管理员登录",
+				"enablePullDownRefresh": false
+			}
+		}, {
+			"path": "pages/login/passwd-login",
+			"style": {
+				"navigationBarTitleText": "%page.login%",
 				"enablePullDownRefresh": false
 			}
 		}, {
@@ -77,9 +77,6 @@
 				"text": "%index.rent%"
 			},
 			{
-				"pagePath": "pages/process/process",
-				"text": "%index.return%"
-			}, {
 				"pagePath": "pages/history/history",
 				"text": "%index.history%"
 			}, {

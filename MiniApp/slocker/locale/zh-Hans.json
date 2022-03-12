@@ -47,6 +47,7 @@
 	"rent.rule-time-error": "起租日期应以今日起并且不能超过30天",
 	"rent.submit": "提交申请",
 	"rent.cancel": "取消申请",
+	"rent.showQrCode": "显示二维码",
 	"rent.form-confirm": "是否提交租用申请？",
 	"rent.process.name": "申请人",
 	"rent.process.rentTime": "申请租用时间",

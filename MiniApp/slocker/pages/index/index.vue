@@ -41,13 +41,27 @@
 				<uni-list-item :title="$t('rent.process.statusDesc')" :rightText="lastApply.statusDesc"></uni-list-item>
 			</uni-list>
 			<template slot="actions">
+				<button type="primary" @click="showQrCode">{{$t('rent.showQrCode')}}</button>
 				<button type="warn" @click="cancel">{{$t('rent.cancel')}}</button>
 			</template>
 		</uni-card>
+		<uni-popup ref="qrCode" background-color="#fff" mask-background-color="rgba(250, 250, 250, 0.9)">
+			<uqrcode :text="qrCodeText"></uqrcode>
+		</uni-popup>
 	</view>
 </template>
 
 <script>
+	import {
+		rentStatus,
+		rentApplyStatus
+	} from '@/static/enums.js'
+	import {
+		qrCodeType
+	} from '../../static/enums.js'
+	import {
+		getRandNumText
+	} from '../../utils/randomhelper.js'
 	import {
 		toDatetime,
 		formatDateTime
@@ -59,6 +73,8 @@
 		getLast,
 		getList
 	} from '@/api/apply.js'
+	import w_md5 from "../../js_sdk/zww-md5/w_md5.js"
+
 	const formDefault = {
 		name: store.state.name,
 		phone: store.state.phone,
@@ -70,6 +86,7 @@
 	export default {
 		data() {
 			return {
+				qrCodeText: '',
 				page: 1,
 				onsubmit: false,
 				onprocess: false,
@@ -118,10 +135,22 @@
 			}
 		},
 		methods: {
+			showQrCode() {
+				const vcode = getRandNumText()
+				const signStr = `${this.$store.state.tenantid}${this.lastApply.id}${vcode}`
+				const sign = w_md5.hex_md5_16(signStr)
+				const rawData = JSON.stringify({
+					type: this.lastApply.status == rentApplyStatus.PendingAudit ? qrCodeType.Apply : qrCodeType
+						.Rent,
+					id: this.lastApply.id,
+					code: vcode,
+					sign: sign
+				})
+				this.qrCodeText = rawData
+				this.$refs.qrCode.open()
+			},
 			updateStatus() {
 				getLast().then(res => {
-					console.log('2333')
-					console.log(res)
 					this.lastApply = res
 					this.onprocess = res && res.status === 0
 				}).catch(err => {
