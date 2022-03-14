@@ -392,8 +392,4 @@
   .el-dialog {
     min-width: 370px;
   }
-
-  .el-input__inner {
-    width: 200px
-  }
 </style>

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using SharedLocker.Domain.SharedLockers.Dtos;
+using SharedLocker.Permissions;
 using SharedLocker.SharedLockers;
 using System;
 using System.Collections.Generic;
@@ -23,11 +24,13 @@ namespace SharedLocker.Domain.SharedLockers
             _repository = repository;
         }
 
+        [Authorize(SharedLockerPermissions.RentApply.Discard)]
         public async ValueTask DiscardAsync(Guid id, DiscardApplyDto input)
         {
             await _applyManager.DiscardAsync(id, input.Reason);
         }
 
+        [Authorize(SharedLockerPermissions.RentApply.Create)]
         public async ValueTask<LockerRentApplyDto> ApplyAsync(CreateLockerRentApplyDto input)
         {
             var rentApply = await _applyManager.RentApplyAsync(input.Name, input.Phone, input.Remark, input.ApplyCount, input.RentTime);
@@ -36,11 +39,13 @@ namespace SharedLocker.Domain.SharedLockers
             return ObjectMapper.Map<LockerRentApply, LockerRentApplyDto>(rentApply);
         }
 
+        [Authorize(SharedLockerPermissions.RentApply.Audit)]
         public async ValueTask AuditAsync(Guid id, AuditRentApplyDto input)
         {
             await _applyManager.AuditAsync(id, input.Result, input.Remark, input.LockerIds);
         }
 
+        [Authorize(SharedLockerPermissions.RentApply.Cancel)]
         public async ValueTask CancelAsync(Guid id, CancelApplyDto input)
         {
             await _applyManager.CancelAsync(id, input.Reason);
@@ -55,24 +60,26 @@ namespace SharedLocker.Domain.SharedLockers
             return ObjectMapper.Map<LockerRentApply, LockerRentApplyDto>(entity);
         }
 
+        [Authorize(SharedLockerPermissions.RentApply.Default)]
         public async ValueTask<LockerRentApplyDto> GetLastAsync()
         {
             var query = await _repository.GetQueryableAsync();
 
-            var entity = await query.Include(x => x.LockerRent).FirstOrDefaultAsync(x => x.UserId == CurrentUser.Id && x.Status == Enums.LockerRentApplyStatus.PendingAudit);
+            var entity = await query.Include(x => x.LockerRent)
+                .Where(x => x.UserId == CurrentUser.Id)
+                .FirstOrDefaultAsync(x=> x.Status == Enums.LockerRentApplyStatus.PendingAudit || x.LockerRent.Status == Enums.LockerRentStatus.InService);
 
             return ObjectMapper.Map<LockerRentApply, LockerRentApplyDto>(entity);
         }
 
+        [Authorize(SharedLockerPermissions.RentApply.Default)]
         public async ValueTask<PagedResultDto<LockerRentApplyDto>> GetListAsync(PagedAndSortedRentApplyRequestDto input)
         {
-            var appId = currentApp.AppId ?? input.AppId;
-
             var likeFilter = $"%{input.Filter}%";
 
             var query = await _repository.GetQueryableAsync();
 
-            query = query.WhereIf(input.UserId.HasValue, x => x.UserId == input.UserId)
+            query = query
                 .WhereIf(input.Status.HasValue, x => x.Status == input.Status)
                 .WhereIf(input.StartTime.HasValue, x => x.RentTime >= input.StartTime)
                 .WhereIf(input.EndTime.HasValue, x => x.RentTime <= input.EndTime)
@@ -91,9 +98,9 @@ namespace SharedLocker.Domain.SharedLockers
             };
         }
 
+        [Authorize(SharedLockerPermissions.RentApply.Create)]
         public async ValueTask<PagedResultDto<LockerRentApplyDto>> GetMyListAsync(PagedAndSortedRentApplyCustomerRequestDto input)
         {
-            var appId = currentApp.AppId ?? input.AppId;
 
             var likeFilter = $"%{input.Filter}%";
 
@@ -119,10 +126,9 @@ namespace SharedLocker.Domain.SharedLockers
             };
         }
 
+        [Authorize(SharedLockerPermissions.RentApply.Create)]
         public async ValueTask<PagedResultDto<LockerRentApplyDto>> GetProcessListAsync(PagedAndSortedRentApplyCustomerRequestDto input)
         {
-            var appId = currentApp.AppId ?? input.AppId;
-
             var likeFilter = $"%{input.Filter}%";
 
             var query = await _repository.GetQueryableAsync();

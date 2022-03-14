@@ -1,4 +1,5 @@
 ﻿using IdentityServer4.Models;
+using SharedLocker.Permissions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -195,8 +196,16 @@ namespace AuthServer.Host
                 name: "uni-app",
                 scopes: commonScopes.Append("BaseService").Append("WebAppGateway").Append("BusinessService").Append("SharedLockerService"),
                 grantTypes: new[] { "client_credentials","WeChatMiniProgram_credentials" },
-                secret: "1q2w3e*".Sha256()
-                //permissions: new[] { UniAppPermissions.Pages.Default, UniAppPermissions.Functions.Default }
+                secret: "1q2w3e*".Sha256(),
+                permissions: new[] { 
+                    UniAppPermissions.Pages.Default, 
+                    UniAppPermissions.Functions.Default,
+                    SharedLockerPermissions.Locker.Default,
+                    SharedLockerPermissions.LockerRent.Default,
+                    SharedLockerPermissions.RentApply.Default,
+                    SharedLockerPermissions.RentApply.Create,
+                    SharedLockerPermissions.RentApply.Cancel,
+                }
             );
         }
 

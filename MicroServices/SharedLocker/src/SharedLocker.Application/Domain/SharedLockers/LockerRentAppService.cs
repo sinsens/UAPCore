@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using SharedLocker.Domain.SharedLockers.Dtos;
+using SharedLocker.Permissions;
 using SharedLocker.SharedLockers;
 using System;
 using System.Collections.Generic;
@@ -36,11 +37,13 @@ namespace SharedLocker.Domain.SharedLockers
 
         }
 
+        [Authorize(SharedLockerPermissions.LockerRent.Return)]
         public async ValueTask ReturnAsync(Guid rentId, ReturnLockerRentDto input)
         {
             await _lockerRentManager.ReturnAsync(rentId, input.ReturnTime, input.ReturnRemark);
         }
 
+        [Authorize(SharedLockerPermissions.LockerRent.Create)]
         public async ValueTask<LockerRentDto> RentAsync(CreateLockerRentDto input)
         {
             var lockerRent = await _lockerRentManager.RentAsync(input.AppId, input.Name, input.Phone, input.Remark, input.RentTime, input.LockerIds.Distinct());
@@ -73,11 +76,13 @@ namespace SharedLocker.Domain.SharedLockers
             };
         }
 
+        [Authorize(SharedLockerPermissions.LockerRent.Delete)]
         public override async Task DeleteAsync(Guid id)
         {
             await _lockerRentManager.DeleteAsync(id);
         }
 
+        [Authorize(SharedLockerPermissions.LockerRent.Discard)]
         public async ValueTask DiscardAsync(Guid id)
         {
             await _lockerRentManager.DiscardAsync(id);

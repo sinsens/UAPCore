@@ -43,6 +43,7 @@ namespace SharedLocker.Domain.SharedLockers
             return await MapToGetOutputDtoAsync(locker);
         }*/
 
+        [Authorize(SharedLockerPermissions.Locker.Default)]
         public async ValueTask<PagedResultDto<LockerRentInfoDto>> GetRentInfoListAsync(Guid id, PagedResultRequestDto input)
         {
             var query = await _repositoryRentInfo.GetQueryableAsync();
@@ -62,6 +63,7 @@ namespace SharedLocker.Domain.SharedLockers
             };
         }
 
+        [Authorize(SharedLockerPermissions.Locker.Update)]
         public override async Task<LockerDto> UpdateAsync(Guid id, CreateUpdateLockerDto input)
         {
             var locker = await _lockerManager.UpdateAsync(id, input.Name, input.Number, input.Status, input.IsActive);
@@ -89,6 +91,7 @@ namespace SharedLocker.Domain.SharedLockers
             };
         }
 
+        [Authorize(SharedLockerPermissions.Locker.Create)]
         public override async Task<LockerDto> CreateAsync(CreateUpdateLockerDto input)
         {
             var locker = await _lockerManager.CreateAsync(input.AppId, input.Name, input.Number, input.Status, true);
@@ -96,6 +99,7 @@ namespace SharedLocker.Domain.SharedLockers
             return await MapToGetOutputDtoAsync(locker);
         }
 
+        [Authorize(SharedLockerPermissions.Locker.Delete)]
         public override async Task DeleteAsync(Guid id)
         {
             await _lockerManager.DeleteAsync(id);
